@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { ClienteRoutingModule } from './cliente-routing.module';
 import { ClienteComponent } from './cliente.component';
+import { PageHeaderModule } from '../../shared';
 
 @NgModule({
   imports: [
     CommonModule,
-    ClienteRoutingModule
+    ClienteRoutingModule,
+    PageHeaderModule
   ],
   declarations: [ClienteComponent]
 })
