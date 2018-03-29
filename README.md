@@ -1,10 +1,5 @@
-# SB Admin rewritten in Angular5 and Bootstrap 4
-
-Simple Dashboard Admin App built using Angular 5 and Bootstrap 4
-
-This project is a port of the famous Free Admin Bootstrap Theme [SB Admin v5.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular5 Theme.
-
-Powered by [StartAngular](http://startangular.com/) & [StrapUI](http://strapui.com/)
+# Curitiba Messenger's Delivery Management System
+> Powered by [StartAngular](http://startangular.com/) & [StrapUI](http://strapui.com/)
 
 ## [Demo](http://rawgit.com/start-angular/SB-Admin-BS4-Angular-5/master/dist/)
 
@@ -40,20 +35,3 @@ $ npm start
 # the produced code can be deployed (rsynced) to a remote server
 $ npm run build
 ```
-
-### Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
-
-### Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-### Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-### Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
