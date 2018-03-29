@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { BikerRoutingModule } from './biker-routing.module';
 import { BikerComponent } from './biker.component';
+import { PageHeaderModule } from '../../shared';
 
 @NgModule({
   imports: [
     CommonModule,
-    BikerRoutingModule
+    BikerRoutingModule,
+    PageHeaderModule
   ],
   declarations: [BikerComponent]
 })
