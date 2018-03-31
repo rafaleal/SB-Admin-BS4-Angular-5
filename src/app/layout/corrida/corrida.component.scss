@@ -1,0 +1,12 @@
+.buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    .btn-danger {
+        margin-left: 2em;
+    }
+    #button-add-corrida {
+        justify-self: flex-start;
+        margin-right: auto;
+    }
+}
