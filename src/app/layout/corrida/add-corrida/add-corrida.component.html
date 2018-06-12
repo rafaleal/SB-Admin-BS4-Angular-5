@@ -1,0 +1,17 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Adicionar Corrida'" [icon]="'fa-flag-checkered'"></app-page-header>
+    <div class="row">
+        <div class="col col-lg-12">
+            <div class="col col-lg-6 cliente">
+                <fieldset>
+                    <div class="font-bold">
+                        <p id="clienteLabel">Cliente</p>
+                    </div>
+                    <div>
+                        <p-dropdown [options]="allClientes" [(ngModel)]="selectedCliente" optionLabel="name"></p-dropdown>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,10 +7,6 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
-import { BikerComponent } from './biker/biker.component';
-import { FluxoDeCaixaComponent } from './fluxo-de-caixa/fluxo-de-caixa.component';
-import { ClienteComponent } from './cliente/cliente.component';
-import { CorridaComponent } from './corrida/corrida.component';
 
 @NgModule({
     imports: [

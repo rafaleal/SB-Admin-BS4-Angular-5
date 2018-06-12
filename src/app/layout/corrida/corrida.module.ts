@@ -7,6 +7,12 @@ import { PageHeaderModule } from '../../shared';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { AddCorridaComponent } from './add-corrida/add-corrida.component';
+import { AddCorridaService } from './add-corrida/add-corrida.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CorridaService } from './corrida.service';
+import { UpdateCorridaComponent } from './update-corrida/update-corrida.component';
+import { ListCorridaComponent } from './list-corrida/list-corrida.component';
 
 @NgModule({
   imports: [
@@ -15,8 +21,18 @@ import { FormsModule } from '@angular/forms';
     PageHeaderModule,
     TableModule,
     DropdownModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
-  declarations: [CorridaComponent]
+  declarations: [
+      CorridaComponent,
+      AddCorridaComponent,
+      UpdateCorridaComponent,
+      ListCorridaComponent
+  ],
+  providers: [
+      AddCorridaService,
+      CorridaService
+  ]
 })
 export class CorridaModule { }
