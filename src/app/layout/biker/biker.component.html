@@ -1,3 +1,77 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Biker'" [icon]="'fa-bicycle'"></app-page-header>
+    <p-table [columns]="cols" [value]="bikers" selectionMode="single" [(selection)]="selectedBiker" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary" let-rowData>
+            <div style="text-align:left">
+                <button type="button" pButton icon="fas fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+            </div>
+        </ng-template>
+
+    </p-table>
+
+    <p-dialog header="Biker Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+        <div class="ui-g ui-fluid" *ngIf="biker">
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="vin">Id</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="id" [(ngModel)]="biker.id" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="nome">Nome</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="nome" [(ngModel)]="biker.nome" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="cpf">CPF</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="cpf" [(ngModel)]="biker.cpf" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="telefone">Telefone</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="telefone" [(ngModel)]="biker.telefone" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="email">Email</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="email" [(ngModel)]="biker.email" />
+                </div>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix" style="width: 100%">
+                <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Deletar"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="save()" label="Salvar"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
 </div>
