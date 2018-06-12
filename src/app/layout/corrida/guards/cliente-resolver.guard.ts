@@ -18,7 +18,7 @@ export class ClienteResolver implements Resolve<Cliente> {
         throw new Error('Method not implemented.');
     }
 
-    loadAllCliente(): Observable<any> {
+    loadAllCliente() {
         //
     }
 
