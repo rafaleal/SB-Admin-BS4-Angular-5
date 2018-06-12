@@ -8,7 +8,7 @@
                 <button class="btn btn-danger" id="button-delete-corrida" (click)="onClickDelete()">Deletar Corrida</button>
             </div>
             <div class="content-section implementation">
-                <p-table [value]="corrida">
+                <p-table [value]="corrida2" sortField="corrida2" sortMode="single" (onSort)="onSort()">
                     <ng-template pTemplate="header">
                         <tr class="text-center">
                             <th rowspan="2">ID</th>
@@ -30,42 +30,25 @@
                             <th>Tempo de Espera</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-corrida >
+                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" >
                         <tr>
-                            <td rowspan="2">{{ corrida.id }}</td>
-                            <td rowspan="2">{{ corrida.data }}</td>
-                            <td rowspan="2">
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.id }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.data }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">
                                 <p-dropdown [options]="statusEntrega" [(ngModel)]="selectedStatusEntrega" placeholder="Status" optionLabel="name" [style]="{'width':'100%'}"></p-dropdown>
                             </td>
-                            <td rowspan="2">{{ corrida.horarios.horaEntrada }}</td>
-                            <td rowspan="2">{{ corrida.horarios.horaColeta }}</td>
-                            <td rowspan="2">{{ corrida.horarios.horaEntrega }}</td>
-                            <td>{{ corrida.itinerario.ponto[0].endereco }}</td>
-                            <td>{{ corrida.itinerario.ponto[0].responsavel }}</td>
-                            <td>{{ corrida.itinerario.ponto[0].tempoEspera }}</td>
-                            <!-- <td>{{ corrida.itinerario.ponto[0].endereco }}</td>
-                            <td>{{ corrida.itinerario.ponto[0].responsavel }}</td>
-                            <td>{{ corrida.itinerario.ponto[0].tempoEspera }}</td>
-                           <td>{{ corrida.itinerario.ponto[1].endereco }}</td>
-                            <td>{{ corrida.itinerario.ponto[1].responsavel }}</td>
-                            <td>{{ corrida.itinerario.ponto[1].tempoEspera }}</td> -->
-                            <td rowspan="2">{{ corrida.cliente }}</td>
-                            <td rowspan="2">{{ corrida.biker }}</td>
-                            <td rowspan="2">{{ corrida.preco | currency:'BRL' }}</td>
-                            <td rowspan="2">
-                                <p-dropdown [options]="pagamento" [(ngModel)]="corrida.forma" placeholder="Selecione" optionLabel="name" [showClear]="true" [style]="{'width':'100%'}"></p-dropdown>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaEntrada }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaColeta }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaEntrega }}</td>
+                            <td>{{ rowData.itinerario.endereco }}</td>
+                            <td>{{ rowData.itinerario.responsavel }}</td>
+                            <td>{{ rowData.itinerario.tempoEspera }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.cliente }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.biker }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.preco | currency:'BRL' }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">
+                                <p-dropdown [options]="pagamento" placeholder="Selecione" optionLabel="name" [showClear]="true" [style]="{'width':'100%'}"></p-dropdown>
                             </td>
-                        </tr>
-                        <!-- *ngFor="let ponto of corrida.itinerario.ponto" -->
-                        <!-- <tr >
-                            <td>{{ corrida.itinerario.ponto[0].endereco }}</td>
-                            <td>{{ corrida.itinerario.ponto[0].responsavel }}</td>
-                            <td>{{ corrida.itinerario.ponto[0].tempoEspera }}</td>
-                        </tr> -->
-                        <tr>
-                            <td>{{ corrida.itinerario.ponto[1].endereco }}</td>
-                            <td>{{ corrida.itinerario.ponto[1].responsavel }}</td>
-                            <td>{{ corrida.itinerario.ponto[1].tempoEspera }}</td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="footer">
@@ -79,3 +62,5 @@
         </div>
     </div>
 </div>
+<pre>{{ corrida | json }}</pre>
+<pre>{{ corrida2 | json }}</pre>
