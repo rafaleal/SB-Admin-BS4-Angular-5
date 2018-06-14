@@ -4,6 +4,7 @@ import { CorridaService } from '../corrida.service';
 import { routerTransition } from '../../../router.animations';
 import * as _ from 'lodash';
 import { Itinerario } from '../../../domain/itinerario';
+import { StatusEntregaEnum } from '../../../domain/enums';
 
 @Component({
   selector: 'app-list-corrida',
@@ -21,6 +22,9 @@ export class ListCorridaComponent implements OnInit {
     formaSelecionada: any;
     statusEntrega: any[];
     selectedStatusEntrega: any;
+    valorTotal: number;
+    distanciaTotal: number;
+    selectedCorrida: any;
 
     constructor(private router: Router,
                 private service: CorridaService,
@@ -30,34 +34,20 @@ export class ListCorridaComponent implements OnInit {
 
     ngOnInit() {
         this.corrida = [
-          {id: 1, data: '07/06/2018', horarios: {horaEntrada: '9:00', horaColeta: '9:15', horaEntrega: ''},
-          itinerario: {ponto: [{endereco: 'Praca Alfredo Andersen', responsavel: 'Adilson', tempoEspera: '30min'},
-          {endereco: 'Banco do Brasil - Praca Escramulhao', responsavel: 'Jadir', tempoEspera: ''}]},
-          cliente: 'Mueller', biker: 'Rodrigo', preco: '35'},
-          {id: 2, data: '07/06/2018', horarios: {horaEntrada: '9:00', horaColeta: '9:15', horaEntrega: ''},
-          itinerario: {ponto: [{endereco: 'Praca Alfredo Andersen', responsavel: 'Adilson', tempoEspera: '30min'},
-          {endereco: 'Banco do Brasil - Praca Escramulhao', responsavel: 'Jadir', tempoEspera: ''}]},
-          cliente: 'Mueller', biker: 'Rodrigo', preco: '35'}
+            {id: 1, status: 'REGISTRADO', data: '07/06/2018', horarios: {horaEntrada: '9:00', horaColeta: '9:15', horaEntrega: ''},
+            itinerario: {ponto: [{endereco: 'Praca Alfredo Andersen', responsavel: 'Adilson', tempoEspera: '30min'},
+            {endereco: 'Banco do Brasil - Praca Toaldo', responsavel: 'Jadir', tempoEspera: ''}]}, km: '15',
+            cliente: 'Mueller', biker: 'Rodrigo', preco: '35', formaPagamento: {nome: 'Dinheiro', troco: '50'}, tipo: 'Esporadico'},
+            {id: 2, status: 'INICIADO', data: '07/06/2018', horarios: {horaEntrada: '9:00', horaColeta: '9:15', horaEntrega: ''},
+            itinerario: {ponto: [{endereco: 'Praca Tiradentes', responsavel: 'Adilson', tempoEspera: '30min'},
+            {endereco: 'Banco Itau - XV Novembro', responsavel: 'Moacir', tempoEspera: '15min'}]}, km: '6',
+            cliente: 'Otavio', biker: 'Lincoln', preco: '16', formaPagamento: {nome: 'Transferencia'}, tipo: 'Faturado'}
         ];
-
+        // this.getCorridas();
+        this.getTotalPrice();
+        this.getTotalDistance();
         this.corrida2 = [];
-        this.corrida.forEach(cor => {
-            cor.itinerario.ponto.forEach(p => {
-                this.corrida2.push({
-                    id: cor.id,
-                    data: cor.data,
-                    horarios: cor.horarios,
-                    itinerario: {
-                        endereco: p.endereco,
-                        responsavel: p.responsavel,
-                        tempoEspera: p.tempoEspera,
-                    },
-                    cliente: cor.cliente,
-                    biker: cor.biker,
-                    preco: cor.preco,
-                });
-            });
-        });
+        this.explodeCorridas();
 
         this.pagamento = [
             {name: 'Dinheiro', id: 1},
@@ -70,7 +60,6 @@ export class ListCorridaComponent implements OnInit {
             {name: 'Iniciado', id: 2},
             {name: 'Concluido', id: 3}
         ];
-
         this.updateRowGroupMetaData();
     }
 
@@ -88,6 +77,20 @@ export class ListCorridaComponent implements OnInit {
 
       onSort() {
         this.updateRowGroupMetaData();
+      }
+
+      getTotalPrice(): void {
+        this.valorTotal = 0;
+        if (this.corrida) {
+            this.corrida.forEach(c => this.valorTotal += parseFloat(c.preco));
+        }
+      }
+
+      getTotalDistance(): void {
+          this.distanciaTotal = 0;
+          if (this.corrida) {
+            this.corrida.forEach(c => this.distanciaTotal += parseFloat(c.km));
+        }
       }
 
       updateRowGroupMetaData() {
@@ -111,4 +114,40 @@ export class ListCorridaComponent implements OnInit {
         }
     }
 
+    getCorridas(): void {
+        this.service.getAllCorridas()
+        .subscribe(corridas => this.corrida = corridas);
+    }
+
+    explodeCorridas(): void {
+        this.corrida.forEach(cor => {
+            cor.itinerario.ponto.forEach(p => {
+                this.corrida2.push({
+                    id: cor.id,
+                    status: cor.status,
+                    data: cor.data,
+                    horarios: cor.horarios,
+                    itinerario: {
+                        endereco: p.endereco,
+                        responsavel: p.responsavel,
+                        tempoEspera: p.tempoEspera,
+                    },
+                    km: cor.km,
+                    cliente: cor.cliente,
+                    biker: cor.biker,
+                    preco: cor.preco,
+                    formaPagamento: cor.formaPagamento,
+                    tipo: cor.tipo,
+                });
+            });
+        });
+    }
+
+    checkIfHaveMoneyEnvolved(): boolean {
+        return this.corrida.some(this.money);
+    }
+
+    money(element): boolean {
+        return element.formaPagamento.nome === 'Dinheiro';
+    }
 }
