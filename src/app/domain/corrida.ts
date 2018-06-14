@@ -13,7 +13,7 @@ export class Corrida implements ValorCalculavel, HorarioRegistravel {
     horarioInicio: Time;
     horarioFim: Time;
     itinerario: Itinerario;
-    pagamento: Pagamento;
+    pagamento: string;
     valor: number = 0;
     tipo: string;
     km: number;
