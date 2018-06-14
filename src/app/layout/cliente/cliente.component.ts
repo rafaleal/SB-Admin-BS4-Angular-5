@@ -3,9 +3,7 @@ import { routerTransition } from '../../router.animations';
 
 @Component({
   selector: 'app-cliente',
-  templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.scss'],
-  animations: [routerTransition()]
+  template: `<router-outlet></router-outlet>`,
 })
 export class ClienteComponent implements OnInit {
 
