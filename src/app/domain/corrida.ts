@@ -8,13 +8,15 @@ import { StatusEntrega } from './status-entrega';
 export class Corrida implements ValorCalculavel, HorarioRegistravel {
     id: number;
     data: Date;
-    statusEntrega: StatusEntrega;
+    statusEntrega: string;
     horarioRegistro: Time;
     horarioInicio: Time;
     horarioFim: Time;
     itinerario: Itinerario;
     pagamento: Pagamento;
     valor: number = 0;
+    tipo: string;
+    km: number;
 
     calcularValorTotal(): void {
         this.valor += this.itinerario.calcularValorTotal() ;
