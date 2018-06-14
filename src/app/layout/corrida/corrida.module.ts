@@ -10,9 +10,12 @@ import { FormsModule } from '@angular/forms';
 import { AddCorridaComponent } from './add-corrida/add-corrida.component';
 import { AddCorridaService } from './add-corrida/add-corrida.service';
 import { HttpClientModule } from '@angular/common/http';
-import { CorridaService } from './corrida.service';
 import { UpdateCorridaComponent } from './update-corrida/update-corrida.component';
 import { ListCorridaComponent } from './list-corrida/list-corrida.component';
+import { ButtonModule } from 'primeng/button';
+import { CorridaService } from './corrida.service';
+import { InMemoryDataService } from './in-memory-data.service';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 @NgModule({
   imports: [
@@ -23,6 +26,10 @@ import { ListCorridaComponent } from './list-corrida/list-corrida.component';
     DropdownModule,
     FormsModule,
     HttpClientModule,
+    ButtonModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+        InMemoryDataService, { passThruUnknownUrl: true, dataEncapsulation: false }
+    )
   ],
   declarations: [
       CorridaComponent,
@@ -32,7 +39,8 @@ import { ListCorridaComponent } from './list-corrida/list-corrida.component';
   ],
   providers: [
       AddCorridaService,
-      CorridaService
+      CorridaService,
+      InMemoryDataService
   ]
 })
 export class CorridaModule { }
