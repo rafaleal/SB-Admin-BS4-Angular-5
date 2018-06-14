@@ -1,6 +1,6 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Biker'" [icon]="'fa-bicycle'"></app-page-header>
-    <p-table [columns]="cols" [value]="bikers" selectionMode="single" [(selection)]="selectedBiker" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+    <p-table [columns]="cols" [value]="bikers" selectionMode="single" [(selection)]="selectedBiker" (onRowSelect)="onRowSelect($event)" [rows]="15">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns">
@@ -24,7 +24,7 @@
 
     </p-table>
 
-    <p-dialog header="Biker Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+    <p-dialog header="Biker Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="350">
         <div class="ui-g ui-fluid" *ngIf="biker">
             <div class="ui-g-12">
                 <div class="ui-g-4">
