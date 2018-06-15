@@ -1,4 +1,4 @@
-export interface Pessoa {
+export class Pessoa {
     telefone: string;
     email: string;
 }

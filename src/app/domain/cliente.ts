@@ -3,16 +3,15 @@ import { Pagamento } from './pagamento';
 import { Responsavel } from './responsavel';
 import { TipoCliente } from './tipo-cliente';
 
-export class Cliente implements Pessoa {
+export class Cliente extends Pessoa {
     id?: number;
-    telefone: string;
-    email: string;
-    tipoCliente: TipoCliente;
-    tipoPessoa: Pessoa;
+    tipoCliente: string;
+    pessoa: Pessoa;
     pagamento: Pagamento;
     responsavel: Responsavel[];
 
-    constructor(tipoPessoa?: Pessoa) {
-        this.tipoPessoa = tipoPessoa;
+    constructor(pessoa?: Pessoa) {
+        super();
+        this.pessoa = pessoa;
     }
 }
