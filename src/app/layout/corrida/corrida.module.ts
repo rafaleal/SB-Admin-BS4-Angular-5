@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { CorridaService } from './corrida.service';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
@@ -29,7 +30,11 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     ButtonModule,
     HttpClientInMemoryWebApiModule.forRoot(
         InMemoryDataService, { passThruUnknownUrl: true, dataEncapsulation: false }
-    )
+    ),
+    AgmCoreModule.forRoot({
+        apiKey: 'AIzaSyAUtZ2xXhiEOVBLBGEImAoO6WAFdHCqJqk',
+        libraries: ['places', 'geometry']
+    })
   ],
   declarations: [
       CorridaComponent,
