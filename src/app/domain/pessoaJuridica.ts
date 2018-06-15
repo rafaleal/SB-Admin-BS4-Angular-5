@@ -1,8 +1,6 @@
 import { Pessoa } from './pessoa';
 
-export class PessoaJuridica implements Pessoa {
-    telefone: string;
-    email: string;
+export class PessoaJuridica extends Pessoa {
     razaoSocial: string;
     cnpj: string;
 }

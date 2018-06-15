@@ -6,7 +6,7 @@ export class Transferencia implements Pagamento {
     id: number;
     status: StatusPagamento;
     valor: number;
-    data: Date;
+    dataPagamento: Date;
     conta: ContaBancaria;
 
     pagar(): void {

@@ -6,7 +6,7 @@ import { CorridaComponent } from './corrida.component';
 import { PageHeaderModule } from '../../shared';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddCorridaComponent } from './add-corrida/add-corrida.component';
 import { AddCorridaService } from './add-corrida/add-corrida.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,6 +26,7 @@ import { AgmCoreModule } from '@agm/core';
     TableModule,
     DropdownModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     ButtonModule,
     HttpClientInMemoryWebApiModule.forRoot(

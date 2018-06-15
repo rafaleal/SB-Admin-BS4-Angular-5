@@ -6,6 +6,11 @@ import { Corrida } from '../../../domain/corrida';
 import { StatusEntregaEnum, TipoClienteEnum } from '../../../domain/enums';
 import { PessoaFisica } from '../../../domain/pessoaFisica';
 import { MapsAPILoader, MouseEvent, GoogleMapsAPIWrapper } from '@agm/core';
+import { FormControl } from '@angular/forms';
+import {} from '@types/googlemaps';
+import { Dinheiro } from '../../../domain/dinheiro';
+import { PessoaJuridica } from '../../../domain/pessoaJuridica';
+import { Responsavel } from '../../../domain/responsavel';
 
 // just an interface for type safety.
 // interface Marker {
@@ -22,7 +27,7 @@ import { MapsAPILoader, MouseEvent, GoogleMapsAPIWrapper } from '@agm/core';
 })
 export class AddCorridaComponent implements OnInit {
 
-  allClientes: Cliente[];
+  allClientes: Cliente[] = [];
   selectedCliente: Cliente;
   corrida: Corrida;
 
@@ -33,29 +38,32 @@ export class AddCorridaComponent implements OnInit {
   lat: number = 51.673858;
   lng: number = 7.815982;
 
-  markers: any[] ;
-//   = [
-//     {
-//         lat: 51.673858,
-//         lng: 7.815982,
-//         label: 'A',
-//         draggable: true
-//     },
-//     {
-//         lat: 51.373858,
-//         lng: 7.215982,
-//         label: 'B',
-//         draggable: false
-//     },
-//     {
-//         lat: 51.723858,
-//         lng: 7.895982,
-//         label: 'C',
-//         draggable: true
-//     }
-// ]
+  searchControl: FormControl;
+
+  markers: any[] = [
+    {
+        lat: 51.673858,
+        lng: 7.815982,
+        label: 'A',
+        draggable: true
+    },
+    {
+        lat: 51.373858,
+        lng: 7.215982,
+        label: 'B',
+        draggable: false
+    },
+    {
+        lat: 51.723858,
+        lng: 7.895982,
+        label: 'C',
+        draggable: true
+    }
+];
 
   @ViewChild('search') public searchElement: ElementRef;
+
+
 
   constructor(
     private mapsApiLoader: MapsAPILoader,
@@ -65,6 +73,9 @@ export class AddCorridaComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+        console.log('SEARCH ELEMENT IS ', this.searchElement);
+        this.searchControl = new FormControl();
+
         this.mapsApiLoader
         .load()
         .then(
@@ -73,27 +84,32 @@ export class AddCorridaComponent implements OnInit {
                 const autoComplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {
                     types: ['address']
                 });
-                console.log('Starting listener');
+                console.log('Starting 2');
                 autoComplete.addListener('place_changed', () => {
                     console.log('Inside listener');
                     this.ngZone.run(() => {
                         const place = autoComplete.getPlace();
-                        this.markers = [
-                            {
-                                lat: place.geometry.location.lat,
-                                lng: place.geometry.location.lng,
-                                label: 'D'
-                            }
-                        ];
+
                         if (place.geometry === undefined || place.geometry === null) {
                             console.log('Nothing found');
                             return;
                         }
+
+                        this.lat = place.geometry.location.lat();
+                        this.lng = place.geometry.location.lng();
+
+                        this.markers.push(
+                            {
+                                lat: this.lat,
+                                lng: this.lng,
+                                label: 'D'
+                            });
                     });
                 });
                 console.log('After listener');
             }
-        );
+        )
+        .catch(e => console.log('SUPER ERRO', e));
 
         const pessoaFisica: PessoaFisica = new PessoaFisica();
         pessoaFisica.cpf = '999999999';
@@ -104,15 +120,19 @@ export class AddCorridaComponent implements OnInit {
         this.selectedCliente = new Cliente(pessoaFisica);
         this.selectedCliente.tipoCliente = TipoClienteEnum.FATURADO.toString();
 
-    //   this.allClientes = [
-    //       {
-    //           id: 1,
-    //           telefone: '35558955',
-    //           email: 'mueller@email.com',
-    //           tipoCliente: 'Faturado',
-    //           tipoPessoa:
-    //       }
-    //   ]
+      this.allClientes.push(
+          {
+              id: 1,
+              tipoCliente: 'Faturado',
+              pagamento: new Dinheiro(),
+              responsavel: [new Responsavel()],
+              pessoa: {
+                  telefone: '35558955',
+                  email: 'mueller@email.com',
+                  razãoSocial: 'Shopping Mueller',
+                  cnpj: '12345645/0001-58'
+                },
+          });
   }
 
 //   loadClientes () {
@@ -124,22 +144,6 @@ export class AddCorridaComponent implements OnInit {
 //     //   this.corrida.pagamento =
 //       this.corrida.tipo = this.selectedCliente.tipoCliente.toString();
 //   }
-
-  clickedMarker(label: string, index: number) {
-    console.log(`clicked the marker: ${label || index}`);
-  }
-
-  mapClicked($event: MouseEvent) {
-    this.markers.push({
-      lat: $event.coords.lat,
-      lng: $event.coords.lng,
-      draggable: true
-    });
-  }
-
-  markerDragEnd(m: any, $event: MouseEvent) {
-    console.log('dragEnd', m, $event);
-  }
 
 }
 

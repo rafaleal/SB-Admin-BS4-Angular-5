@@ -14,4 +14,12 @@ export class ListClienteComponent implements OnInit {
   ngOnInit() {
   }
 
+  onClickEdit() {
+      //
+  }
+
+  onClickDelete() {
+      //
+  }
+
 }

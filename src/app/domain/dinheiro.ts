@@ -5,7 +5,7 @@ export class Dinheiro implements Pagamento {
     troco: number | boolean;
     status: StatusPagamento;
     valor: number;
-    data: Date;
+    dataPagamento: Date;
 
     pagar(): void {
         throw new Error('Method not implemented.');
