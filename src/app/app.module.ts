@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -43,7 +44,8 @@ export function createApollo(httpLink: HttpLink) {
             }
         }),
         AppRoutingModule,
-        RouterModule
+        RouterModule,
+        FormsModule,
     ],
     declarations: [AppComponent],
     providers: [
