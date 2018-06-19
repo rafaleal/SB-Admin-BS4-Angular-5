@@ -17,6 +17,7 @@ import { CorridaService } from './corrida.service';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AgmCoreModule } from '@agm/core';
+import { CONFIG } from '../../../../config/config';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import { AgmCoreModule } from '@agm/core';
         InMemoryDataService, { passThruUnknownUrl: true, dataEncapsulation: false }
     ),
     AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyAUtZ2xXhiEOVBLBGEImAoO6WAFdHCqJqk',
+        apiKey: CONFIG.GOOGLE_API_KEY,
         libraries: ['places', 'geometry']
     })
   ],
