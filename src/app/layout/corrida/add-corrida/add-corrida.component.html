@@ -2,31 +2,16 @@
     <app-page-header [heading]="'Adicionar Corrida'" [icon]="'fa-flag-checkered'"></app-page-header>
     <div class="row">
         <div class="col col-lg-12">
-            <div class="col col-lg-6 cliente">
-                <fieldset>
-                    <div class="font-bold">
-                        <p id="clienteLabel">Cliente</p>
-                    </div>
-                    <div>
-                        <p-dropdown [options]="allClientes" [(ngModel)]="selectedCliente" optionLabel="pessoa.razaoSocial"></p-dropdown>
-                        <!-- <button type="button" pButton icon="fas fa-plus" label="Add"></button> -->
-                    </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control" #search [formControl]="searchControl">
-                        <!-- <button type="button" pButton icon="fas fa-plus" label="Add address" (click)="addAddress()">Adicionar</button> -->
-                    </div>
-                    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false" >
-
-                        <agm-marker *ngFor="let m of markers; let i = index" [latitude]="m.lat" [longitude]="m.lng"
-                            [label]="m.label" >
-
-                        </agm-marker>
-                    </agm-map>
-                </fieldset>
-            </div>
+            <fieldset>
+                <div class="font-bold">
+                    <p id="clienteLabel">Cliente</p>
+                </div>
+                <div>
+                    <p-dropdown [options]="allClientes" [(ngModel)]="selectedCliente" optionLabel="pessoa.razaoSocial"></p-dropdown>
+                    <!-- <button type="button" pButton icon="fas fa-plus" label="Add"></button> -->
+                </div>
+            </fieldset>
+            <app-add-rota></app-add-rota>
         </div>
     </div>
 </div>
-<pre>{{ markers.length }}</pre>
-<!-- <pre>{{ searchElement | json }}</pre> -->
-<!-- <pre>{{ selectedCliente | json }}</pre> -->
