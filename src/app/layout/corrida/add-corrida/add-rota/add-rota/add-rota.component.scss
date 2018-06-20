@@ -1,0 +1,21 @@
+.add-route-container {
+    display: flex;
+    .border {
+        border: 1em;
+    }
+    #input-and-display-address {
+        justify-content: flex-start;
+    }
+    #map {
+        justify-content: flex-end;
+    }
+}
+
+ul {
+    list-style: none;
+}
+
+agm-map {
+    height: 500px;
+    width: 100%;
+}
