@@ -19,9 +19,12 @@ export class AddRotaComponent implements OnInit {
     directionsRequest: google.maps.DirectionsRequest;
     directionsDisplay: google.maps.DirectionsRenderer;
 
-    distancia: number;
+    distance: number;
 
-    enderecos: Endereco[];
+    addresses: Endereco[];
+
+    alphabeticLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    labelIndex: number;
 
     // google maps zoom level
     zoom: number = 12;
@@ -32,13 +35,12 @@ export class AddRotaComponent implements OnInit {
 
     searchControl: FormControl;
 
-    markers: any[] = [
-        {
-            lat: -25.420459,
-            lng: -49.269688,
-            // label: 'A'
-        }
-    ];
+    headquarterMarker: any = {
+        lat: -25.420459,
+        lng: -49.269688
+    };
+
+    markers: any[] = [];
 
     @ViewChild('search') public searchElement: ElementRef;
     @ViewChild(AgmMap) public maps: AgmMap;
@@ -50,20 +52,19 @@ export class AddRotaComponent implements OnInit {
 
     ngOnInit() {
 
-        console.log('SEARCH ELEMENT IS ', this.searchElement);
         this.searchControl = new FormControl();
-        this.enderecos = [];
+        this.addresses = [];
         this.maps.mapReady.subscribe(
             mapReady => this.directionsDisplay.setMap(mapReady),
-            e => console.log('Erro no mapReady')
+            e => console.log('Error setting map in DirectionRenderer')
         );
-        if (this.directionsDisplay) {
-            console.log('Map is ready: ', this.directionsDisplay);
-        }
+
+        this.labelIndex = 0;
+
         this.mapsApiLoader
             .load()
             .then(() => {
-                // services have to be initiliazed within MapsApiLoader to work
+                // services have to be initialized inside MapsApiLoader to work
                 this.directionsService = new google.maps.DirectionsService();
                 this.directionsRequest = {} as google.maps.DirectionsRequest;
                 this.directionsDisplay = new google.maps.DirectionsRenderer();
@@ -74,32 +75,32 @@ export class AddRotaComponent implements OnInit {
                         componentRestrictions: {country: 'br'}
                     }
                 );
-                this.setupPlaceChangedListener(this.autoComplete);
+                this.setupPlaceChangedListener();
             })
-            .catch(e => console.log('SUPER ERRO', e));
+            .catch(e => console.log('Error loading MapsApi', e));
 
     }
 
-    setupPlaceChangedListener(autocomplete: google.maps.places.Autocomplete): void {
+    setupPlaceChangedListener(): void {
         this.autoComplete.addListener('place_changed', () => {
-            console.log('Inside listener');
+            console.log('Setting listener');
             this.ngZone.run(() => {
                 const place = this.autoComplete.getPlace();
 
                 if (place.geometry === undefined || place.geometry === null) {
-                    console.log('Nothing found');
+                    console.log('Place not found');
                     return;
                 }
 
                 if (!place.place_id) {
-                    console.log('Selecione uma opção da lista dropdown.');
+                    console.log('Select an option from list dropdown');
                     return;
                 }
 
                 const latitude = place.geometry.location.lat();
                 const longitude = place.geometry.location.lng();
 
-                this.enderecos.push({
+                this.addresses.push({
                     logradouro: place.formatted_address,
                     complemento: '',
                     latitude: latitude,
@@ -108,10 +109,10 @@ export class AddRotaComponent implements OnInit {
 
                 this.markers.push({
                     lat: latitude,
-                    lng: longitude
-                    // label: 'B'
+                    lng: longitude,
+                    label: this.alphabeticLabels[this.labelIndex++ % this.alphabeticLabels.length]
                 });
-                console.log('Lista de markers: ', JSON.stringify(this.markers));
+                console.log('Markers list: ', JSON.stringify(this.markers));
                 this.searchControl.reset();
                 this.getRoute();
             });
@@ -160,11 +161,15 @@ export class AddRotaComponent implements OnInit {
 
     calcDistance(response: google.maps.DirectionsResult) {
         const rota: google.maps.DirectionsRoute = response.routes[0];
-        let distancia: number = 0;
+        let distance: number = 0;
         for (let i = 0; i < rota.legs.length; i++) {
-            distancia += rota.legs[i].distance.value;
+            distance += rota.legs[i].distance.value;
         }
-        this.distancia = parseFloat((distancia / 1000).toFixed(2));
-        console.log('Distancia total: ', this.distancia);
+        this.distance = parseFloat((distance / 1000).toFixed(2));
+        console.log('Distance total: ', this.distance);
+    }
+
+    trackByIndex(index: number, obj: any): any {
+        return index;
     }
 }

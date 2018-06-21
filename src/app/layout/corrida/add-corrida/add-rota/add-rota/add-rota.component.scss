@@ -1,21 +1,51 @@
 .add-route-container {
     display: flex;
+    padding: 0%;
+
     .border {
         border: 1em;
     }
     #input-and-display-address {
         justify-content: flex-start;
+        padding: 0%;
     }
     #map {
         justify-content: flex-end;
+        padding-right: 0%;
     }
 }
 
 ul {
     list-style: none;
+    padding: 0%;
 }
 
 agm-map {
     height: 500px;
     width: 100%;
+}
+
+.distance-container {
+    padding-top: 2em;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.line {
+    display: flex;
+    align-content: center;
+}
+
+.letter-marker {
+    height: 25px;
+    width: 25px;
+    background-color: cornflowerblue;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    margin-right: 1em;
+    align-self: center;
 }
