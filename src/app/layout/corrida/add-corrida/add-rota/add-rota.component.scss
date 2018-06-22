@@ -1,10 +1,14 @@
+input[placeholder] { text-overflow: ellipsis; }
+
+.border {
+    border: 1em;
+    border-radius: 10%;
+}
+
 .add-route-container {
     display: flex;
     padding: 0%;
 
-    .border {
-        border: 1em;
-    }
     #input-and-display-address {
         justify-content: flex-start;
         padding: 0%;
@@ -25,7 +29,11 @@ agm-map {
     width: 100%;
 }
 
-.distance-container {
+#distance-container {
+    padding-top: 2em;
+}
+
+#price-container {
     padding-top: 2em;
 }
 
@@ -36,6 +44,7 @@ agm-map {
 .line {
     display: flex;
     align-content: center;
+    padding-left: -2em;
 }
 
 .letter-marker {
@@ -48,4 +57,8 @@ agm-map {
     text-align: center;
     margin-right: 1em;
     align-self: center;
+}
+
+.address-complement {
+    border: none;
 }

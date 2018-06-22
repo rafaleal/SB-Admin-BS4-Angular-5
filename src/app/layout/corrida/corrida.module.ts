@@ -18,7 +18,7 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AgmCoreModule } from '@agm/core';
 import { CONFIG } from '../../../../config/config';
-import { AddRotaComponent } from './add-corrida/add-rota/add-rota/add-rota.component';
+import { AddRotaComponent } from './add-corrida/add-rota/add-rota.component';
 
 @NgModule({
   imports: [
