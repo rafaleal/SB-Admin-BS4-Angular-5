@@ -10,7 +10,7 @@
             </div>
             <div id="addresses-container" *ngIf="addresses">
                 <ul *ngFor="let address of addresses; let index = index; trackBy: trackByIndex;">
-                    <div class="line border">
+                    <div class="line">
                         <div class="letter-marker">{{ alphabeticLabels[index] }}</div>
                         <div>
                             <li>
@@ -21,7 +21,7 @@
                     </div>
                 </ul>
             </div>
-            <div *ngIf="distance">
+            <div id="distance-price-container" *ngIf="distance">
                 <div id="distance-container">
                     <div class="font-bold">
                         <p id="distance-label">Distância</p>
