@@ -11,13 +11,6 @@ import { PessoaFisica } from '../../../domain/pessoaFisica';
 import { Dinheiro } from '../../../domain/dinheiro';
 import { Responsavel } from '../../../domain/responsavel';
 
-// just an interface for type safety.
-// interface Marker {
-//     lat: number;
-//     lng: number;
-//     label?: string;
-//     draggable: boolean;
-// }
 @Component({
     selector: 'app-add-corrida',
     templateUrl: './add-corrida.component.html',
@@ -25,7 +18,7 @@ import { Responsavel } from '../../../domain/responsavel';
     animations: [routerTransition()]
 })
 export class AddCorridaComponent implements OnInit {
-    allClientes: Cliente[] = [];
+    allClientes: Cliente[];
     selectedCliente: Cliente;
     corrida: Corrida;
 
@@ -35,38 +28,30 @@ export class AddCorridaComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.allClientes = [];
 
-            const pessoaFisica: PessoaFisica = new PessoaFisica();
-            pessoaFisica.cpf = '999999999';
-            pessoaFisica.nome = 'Alberto João';
-            pessoaFisica.email = 'ajoao@gmail.com';
-            pessoaFisica.telefone = '(41)9696969696';
-
-            this.selectedCliente = new Cliente(pessoaFisica);
-            this.selectedCliente.tipoCliente = TipoClienteEnum.FATURADO.toString();
-
-          this.allClientes.push(
-              {
-                  id: 1,
-                  tipoCliente: 'Faturado',
-                  pagamento: new Dinheiro(),
-                  responsavel: [new Responsavel()],
-                  pessoa: {
-                      telefone: '35558955',
-                      email: 'mueller@email.com',
-                      razãoSocial: 'Shopping Mueller',
-                      cnpj: '12345645/0001-58'
-                    },
-              });
+      this.allClientes.push(
+          {
+              id: 1,
+              tipoCliente: 'Faturado',
+              pagamento: new Dinheiro(),
+              responsavel: [new Responsavel()],
+              pessoa: {
+                  telefone: '35558955',
+                  email: 'mueller@email.com',
+                  razaoSocial: 'Shopping Mueller',
+                  cnpj: '12345645/0001-58'
+                },
+          });
     }
 
-      loadClientes () {
-        //
-      }
+    loadClientes () {
+    //
+    }
 
-      newCorridaEsporadico() {
-          this.corrida.statusEntrega = StatusEntregaEnum.REGISTRADO.toString();
-        //   this.corrida.pagamento =
-          this.corrida.tipo = this.selectedCliente.tipoCliente.toString();
-      }
+    newCorridaEsporadico() {
+        this.corrida.statusEntrega = StatusEntregaEnum.REGISTRADO.toString();
+    //   this.corrida.pagamento =
+        this.corrida.tipo = this.selectedCliente.tipoCliente.toString();
+    }
 }
