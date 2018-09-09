@@ -7,8 +7,8 @@
                     <p id="clienteLabel">Cliente</p>
                 </div>
                 <div>
-                    <p-dropdown [options]="allClientes" [(ngModel)]="selectedCliente" optionLabel="pessoa.razaoSocial"></p-dropdown>
-                    <!-- <button type="button" pButton icon="fas fa-plus" label="Add"></button> -->
+                    <p-dropdown [options]="allClientes" [(ngModel)]="selectedCliente" optionLabel="pessoa.razaoSocial" placeholder="Selecione um cliente" [showClear]="true"></p-dropdown>
+                    <button class="button-add-cliente" type="button" pButton icon="fas fa-plus" label="Add"></button>
                 </div>
             </fieldset>
             <app-add-rota></app-add-rota>
