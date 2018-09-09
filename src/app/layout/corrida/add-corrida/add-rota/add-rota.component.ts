@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, NgZone, OnDestroy } from '@an
 import { FormControl } from '@angular/forms';
 import { AgmMap, MapsAPILoader } from '@agm/core';
 import * as _ from 'lodash';
-import {} from '@types/googlemaps';
+import { } from 'googlemaps';
 import { Endereco } from '../../../../domain/endereco';
 
 
