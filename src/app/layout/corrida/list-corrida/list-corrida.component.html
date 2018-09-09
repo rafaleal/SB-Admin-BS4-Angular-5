@@ -33,15 +33,12 @@
                             <th>Tempo de Espera</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
-                        <tr>
+                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                        <tr [pSelectableRow]="rowData.id" >
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.id }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.status }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.cliente }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.data }}</td>
-                            <!-- <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">
-                                <p-dropdown [options]="statusEntrega" [(ngModel)]="selectedStatusEntrega" placeholder="Status" optionLabel="name" [style]="{'width':'100%'}"></p-dropdown>
-                            </td> -->
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaEntrada }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaColeta }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaEntrega }}</td>
@@ -50,9 +47,6 @@
                             <td>{{ rowData.itinerario.tempoEspera }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.km }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.preco | currency:'BRL' }}</td>
-                            <!-- <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">
-                                <p-dropdown [options]="pagamento" placeholder="Selecione" optionLabel="name" [showClear]="true" [style]="{'width':'100%'}"></p-dropdown>
-                            </td> -->
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.formaPagamento.nome }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex && checkIfHaveMoneyEnvolved()" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.formaPagamento.troco | currency:'BRL'}}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.tipo }}</td>
@@ -71,6 +65,3 @@
         </div>
     </div>
 </div>
-<pre>{{ selectedCorrida | json }}</pre>
-<pre>{{ corrida | json }}</pre>
-<pre>{{ corrida2 | json }}</pre>
