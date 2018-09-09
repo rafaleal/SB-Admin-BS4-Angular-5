@@ -12,6 +12,12 @@ input[placeholder] { text-overflow: ellipsis; }
     #input-and-display-address {
         justify-content: flex-start;
         padding: 0%;
+
+        #distance-price-container {
+            display: flex;
+            justify-content: row;
+            align-self: flex-end;
+        }
     }
     #map {
         justify-content: flex-end;
@@ -64,7 +70,3 @@ agm-map {
     border: none;
 }
 
-#distance-price-container {
-    display: flex;
-    justify-content: row;
-}
