@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { Biker } from '../../domain/biker';
 import { BikerService } from './biker.service';
+import * as cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'app-biker',
@@ -19,7 +20,7 @@ export class BikerComponent implements OnInit {
 
         newBiker: boolean;
 
-        bikers: Biker[];
+        bikers: Biker[] = [];
 
         cols: any[];
 
@@ -72,10 +73,6 @@ export class BikerComponent implements OnInit {
         }
 
         cloneBiker(b: Biker): Biker {
-            const biker = {} as Biker;
-            // for (let prop in b) {
-            //     biker[prop] = b[prop];
-            // }
-            return biker;
+            return cloneDeep(b);
         }
 }

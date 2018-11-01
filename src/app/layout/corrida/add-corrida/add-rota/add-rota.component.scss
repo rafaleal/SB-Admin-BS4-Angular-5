@@ -15,8 +15,7 @@ input[placeholder] { text-overflow: ellipsis; }
 
         #distance-price-container {
             display: flex;
-            justify-content: row;
-            align-self: flex-end;
+            justify-content: flex-end;
         }
     }
     #map {
