@@ -10,6 +10,7 @@ import { StatusEntregaEnum, TipoClienteEnum } from '../../../domain/enums';
 import { PessoaFisica } from '../../../domain/pessoaFisica';
 import { Dinheiro } from '../../../domain/dinheiro';
 import { Responsavel } from '../../../domain/responsavel';
+import { Transferencia } from '../../../domain/transferencia';
 
 @Component({
     selector: 'app-add-corrida',
@@ -42,6 +43,18 @@ export class AddCorridaComponent implements OnInit {
                   razaoSocial: 'Shopping Mueller',
                   cnpj: '12345645/0001-58'
                 },
+          },
+          {
+              id: 2,
+              tipoCliente: 'Faturado',
+              pagamento: new Transferencia(),
+              responsavel: [new Responsavel()],
+              pessoa: {
+                  telefone: '33333333',
+                  email: 'contato@polvo.com',
+                  razaoSocial: 'Polvo Comunicação',
+                  cnpj: '12345678/0001-58'
+              }
           });
     }
 
