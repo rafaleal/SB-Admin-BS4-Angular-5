@@ -3,9 +3,11 @@
 # compiled output
 /tmp
 /out-tsc
+/dist
 
 # dependencies
 /node_modules
+/config/config.ts
 
 # IDEs and editors
 /.idea

@@ -1,0 +1,17 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Adicionar Corrida'" [icon]="'fa-flag-checkered'"></app-page-header>
+    <div class="row">
+        <div class="col col-lg-12">
+            <fieldset class="col-md-6">
+                <div class="font-bold">
+                    <p id="clienteLabel">Cliente</p>
+                </div>
+                <div class="cliente-container">
+                    <p-dropdown [options]="allClientes" [(ngModel)]="selectedCliente" optionLabel="pessoa.razaoSocial" placeholder="Selecione um cliente" [showClear]="true"></p-dropdown>
+                    <button class="button-add-cliente" type="button" pButton icon="fas fa-plus" label="Add"></button>
+                </div>
+            </fieldset>
+            <app-add-rota></app-add-rota>
+        </div>
+    </div>
+</div>
