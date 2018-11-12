@@ -1,13 +1,9 @@
 import { PessoaFisica } from './pessoaFisica';
 import { SalarioCalculavel } from './salario-calculavel';
 
-export class Biker extends PessoaFisica implements SalarioCalculavel {
+export class Biker extends PessoaFisica {
     id: number;
-    totalKm: number;
-    numeroCorridas: number;
-    endereco: string;
-
-    calcularSalario() {
-        throw new Error('Method not implemented.');
-    }
+    totalDistance?: number;
+    totalDeliveries?: number;
+    totalDue?: number;
 }
