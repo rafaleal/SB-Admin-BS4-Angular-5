@@ -3,6 +3,7 @@ import { routerTransition } from '../../router.animations';
 import { Biker } from '../../domain/biker';
 import { BikerService } from './biker.service';
 import * as cloneDeep from 'lodash/cloneDeep';
+import { PessoaFisica } from '../../domain/pessoaFisica';
 
 @Component({
   selector: 'app-biker',
@@ -24,20 +25,15 @@ export class BikerComponent implements OnInit {
 
         cols: any[];
 
+        summaryCols: any[];
+
         constructor(private bikerService: BikerService) { }
 
         ngOnInit() {
-            // this.bikerService.getBikers().then(bikers => this.bikers = bikers);
+            this.bikerService.getBikersSummary().subscribe(bikers => this.bikers = bikers);
 
-            this.cols = [
-                { field: 'id', header: 'Id' },
-                { field: 'nome', header: 'Nome' },
-                { field: 'cpf', header: 'CPF' },
-                { field: 'telefone', header: 'Telefone' },
-                { field: 'email', header: 'Email' },
-                { field: 'numero', header: 'Numero de Corridas'},
-                { field: 'distancia', header: 'Distancia Total' }
-            ];
+            this.populateBikersDetailsTable();
+            this.populateBikerSummaryTable();
         }
 
         showDialogToAdd() {
@@ -49,7 +45,9 @@ export class BikerComponent implements OnInit {
         save() {
             const bikers = [...this.bikers];
             if (this.newBiker) {
-                bikers.push(this.biker);
+                // TODO add logger
+                console.log(JSON.stringify(this.biker));
+                this.bikerService.postBiker(this.biker).subscribe(newBiker => this.bikers.push(newBiker));
             } else {
                 bikers[this.bikers.indexOf(this.selectedBiker)] = this.biker;
             }
@@ -74,5 +72,27 @@ export class BikerComponent implements OnInit {
 
         cloneBiker(b: Biker): Biker {
             return cloneDeep(b);
+        }
+
+        populateBikersDetailsTable(): void {
+            this.cols = [
+                { field: 'id', header: 'Id' },
+                { field: 'fullname', header: 'Nome' },
+                { field: 'cpf', header: 'CPF' },
+                { field: 'phone', header: 'Telefone' },
+                { field: 'email', header: 'Email' },
+                { field: 'address', header: 'Endereço' },
+                { field: 'createdAt', header: 'Data de Registro' }
+            ];
+        }
+
+        populateBikerSummaryTable(): void {
+            this.summaryCols = [
+                { field: 'id', header: 'Id' },
+                { field: 'name', header: 'Nome' },
+                { field: 'totalDeliveries', header: 'Nº Total de Corridas'},
+                { field: 'totalDistance', header: 'Distancia Total' },
+                { field: 'totalDue', header: 'R$ Total' },
+            ];
         }
 }
