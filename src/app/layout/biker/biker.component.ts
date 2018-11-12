@@ -27,13 +27,16 @@ export class BikerComponent implements OnInit {
 
         summaryCols: any[];
 
+        summaryBikers: Biker[] = [];
+
         constructor(private bikerService: BikerService) { }
 
         ngOnInit() {
-            this.bikerService.getBikersSummary().subscribe(bikers => this.bikers = bikers);
-
             this.populateBikersDetailsTable();
             this.populateBikerSummaryTable();
+
+            this.bikerService.getBikersSummary().subscribe(summaryBikers => this.summaryBikers = summaryBikers);
+            this.bikerService.getAllBikers().subscribe(bikers => this.bikers = bikers);
         }
 
         showDialogToAdd() {
@@ -49,6 +52,8 @@ export class BikerComponent implements OnInit {
                 console.log(JSON.stringify(this.biker));
                 this.bikerService.postBiker(this.biker).subscribe(newBiker => this.bikers.push(newBiker));
             } else {
+                console.log(JSON.stringify(this.biker));
+                this.bikerService.editBiker(this.biker).subscribe();
                 bikers[this.bikers.indexOf(this.selectedBiker)] = this.biker;
             }
 
@@ -58,6 +63,8 @@ export class BikerComponent implements OnInit {
         }
 
         delete() {
+            this.bikerService.deleteBiker(this.selectedBiker).subscribe();
+
             const index = this.bikers.indexOf(this.selectedBiker);
             this.bikers = this.bikers.filter((val, i) => i != index);
             this.biker = null;
@@ -77,7 +84,7 @@ export class BikerComponent implements OnInit {
         populateBikersDetailsTable(): void {
             this.cols = [
                 { field: 'id', header: 'Id' },
-                { field: 'fullname', header: 'Nome' },
+                { field: 'fullName', header: 'Nome' },
                 { field: 'cpf', header: 'CPF' },
                 { field: 'phone', header: 'Telefone' },
                 { field: 'email', header: 'Email' },
@@ -88,8 +95,7 @@ export class BikerComponent implements OnInit {
 
         populateBikerSummaryTable(): void {
             this.summaryCols = [
-                { field: 'id', header: 'Id' },
-                { field: 'name', header: 'Nome' },
+                { field: 'fullName', header: 'Nome' },
                 { field: 'totalDeliveries', header: 'Nº Total de Corridas'},
                 { field: 'totalDistance', header: 'Distancia Total' },
                 { field: 'totalDue', header: 'R$ Total' },
