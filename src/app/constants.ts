@@ -12,4 +12,6 @@ const api = '/api/v1';
 
 export const
     BIKER_SUMMARY_API_URL = prefix + api + '/bikers/summary',
-    BIKER_POST_API_URL = prefix + api + '/biker/new';
+    BIKER_GET_ALL_API_URL = prefix + api + '/bikers',
+    BIKER_POST_API_URL = prefix + api + '/biker/new',
+    BIKER_DEFAULT_API_URL = prefix + api + '/biker/{id}';
