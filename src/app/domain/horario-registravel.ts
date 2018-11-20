@@ -1,7 +1,7 @@
 import { Time } from '@angular/common';
 
 export interface HorarioRegistravel {
-    horarioRegistro: Time;
-    horarioInicio: Time;
-    horarioFim: Time;
+    registeredTime: Time;
+    collectUpTime: Time;
+    handoverTime: Time;
 }
