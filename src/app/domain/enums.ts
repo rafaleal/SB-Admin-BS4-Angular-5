@@ -1,20 +1,31 @@
-export enum StatusPagamentoEnum {
-    PENDENTE,
-    EFETUADO
+export enum ContractTypeEnum {
+    Billed = 'BILLED',
+    Sponateneous = 'SPONTANEOUS'
 }
 
-export enum StatusEntregaEnum {
-    REGISTRADO,
-    INICIADO,
-    CONCLUIDO
+export enum CustomerTypeEnum {
+    Legal = 'LEGAL',
+    Natural = 'NATURAL'
 }
 
-export enum TipoClienteEnum {
-    FATURADO,
-    ESPORADICO
+export enum DeliveryStatusEnum {
+    Registered = 'REGISTERED',
+    Ongoing = 'ONGOING',
+    Completed = 'COMPLETED'
 }
 
-export enum TipoPessoaEnum {
-    CPF,
-    CNPJ
+export enum PaymentStatusEnum {
+    Pending = 'PENDING',
+    Payed = 'Payed'
 }
+
+export enum PaymentTypeEnum {
+    Money = 'MONEY',
+    Transfer = 'TRANSFER'
+}
+
+export enum PhoneTypeEnum {
+    LandLine = 'LAND_LINE',
+    Mobile = 'MOBILE'
+}
+
