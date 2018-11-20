@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Corrida } from '../../domain/corrida';
+import { Delivery } from '../../domain/delivery';
 import { Observable } from 'rxjs/Observable';
 
 const httpOptions = {
@@ -8,19 +8,8 @@ const httpOptions = {
   };
 
 @Injectable()
-export class CorridaService {
-
-  private corridasUrl = 'api/corridas';
+export class DeliveryService {
 
   constructor(private http: HttpClient) { }
-
-  getSingleCorrida(id: number): any {
-      //
-      return {};
-  }
-
-  getAllCorridas(): Observable<any[]> {
-      return this.http.get<any[]>(this.corridasUrl);
-  }
 
 }

@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CorridaService } from '../corrida.service';
+import { DeliveryService } from '../delivery.service';
 import { routerTransition } from '../../../router.animations';
 import * as _ from 'lodash';
-import { Itinerario } from '../../../domain/itinerario';
-import { StatusEntregaEnum } from '../../../domain/enums';
+import { Route } from '../../../domain/route';
+import { DeliveryStatusEnum } from '../../../domain/enums';
 
 @Component({
-  selector: 'app-list-corrida',
-  templateUrl: './list-corrida.component.html',
-  styleUrls: ['./list-corrida.component.scss'],
+  selector: 'app-list-delivery',
+  templateUrl: './list-delivery.component.html',
+  styleUrls: ['./list-delivery.component.scss'],
   animations: [routerTransition()]
 })
-export class ListCorridaComponent implements OnInit {
+export class ListDeliveryComponent implements OnInit {
 
-    corrida: any[];
-    corrida2: any[];
+    delivery: any[];
+    delivery2: any[];
     rowGroupMetadata: any;
     sales: any[];
     pagamento: any[];
@@ -24,16 +24,16 @@ export class ListCorridaComponent implements OnInit {
     selectedStatusEntrega: any;
     valorTotal: number;
     distanciaTotal: number;
-    selectedCorrida: any;
+    selectedDelivery: any;
 
     constructor(private router: Router,
-                private service: CorridaService,
+                private service: DeliveryService,
                 private route: ActivatedRoute) {
 
     }
 
     ngOnInit() {
-        this.corrida = [
+        this.delivery = [
             {id: 1, status: 'REGISTRADO', data: '07/06/2018', horarios: {horaEntrada: '9:00', horaColeta: '9:15', horaEntrega: ''},
             itinerario: {ponto: [{endereco: 'Praca Alfredo Andersen', responsavel: 'Adilson', tempoEspera: '30min'},
             {endereco: 'Banco do Brasil - Praca Toaldo', responsavel: 'Jadir', tempoEspera: ''}]}, km: '15',
@@ -43,11 +43,11 @@ export class ListCorridaComponent implements OnInit {
             {endereco: 'Banco Itau - XV Novembro', responsavel: 'Moacir', tempoEspera: '15min'}]}, km: '6',
             cliente: 'Otavio', biker: 'Lincoln', preco: '16', formaPagamento: {nome: 'Transferencia'}, tipo: 'Faturado'}
         ];
-        // this.getCorridas();
+        // this.getDeliverys();
         this.getTotalPrice();
         this.getTotalDistance();
-        this.corrida2 = [];
-        this.explodeCorridas();
+        this.delivery2 = [];
+        this.explodeDeliveries();
 
         this.pagamento = [
             {name: 'Dinheiro', id: 1},
@@ -68,7 +68,7 @@ export class ListCorridaComponent implements OnInit {
       }
 
       onClickEdit(): Promise<boolean> {
-          return this.router.navigate(['update-corrida'], { relativeTo: this.route });
+          return this.router.navigate(['update-delivery'], { relativeTo: this.route });
       }
 
       onClickDelete(): void {
@@ -81,28 +81,28 @@ export class ListCorridaComponent implements OnInit {
 
       getTotalPrice(): void {
         this.valorTotal = 0;
-        if (this.corrida) {
-            this.corrida.forEach(c => this.valorTotal += parseFloat(c.preco));
+        if (this.delivery) {
+            this.delivery.forEach(c => this.valorTotal += parseFloat(c.preco));
         }
       }
 
       getTotalDistance(): void {
           this.distanciaTotal = 0;
-          if (this.corrida) {
-            this.corrida.forEach(c => this.distanciaTotal += parseFloat(c.km));
+          if (this.delivery) {
+            this.delivery.forEach(c => this.distanciaTotal += parseFloat(c.km));
         }
       }
 
       updateRowGroupMetaData() {
         this.rowGroupMetadata = {};
-        if (this.corrida2) {
-            for (let i = 0; i < this.corrida2.length; i++) {
-                const rowData = this.corrida2[i];
+        if (this.delivery2) {
+            for (let i = 0; i < this.delivery2.length; i++) {
+                const rowData = this.delivery2[i];
                 const id = rowData.id;
                 if (i == 0) {
                     this.rowGroupMetadata[id] = { index: 0, size: 1 };
                 } else {
-                    const previousRowData = this.corrida2[i - 1];
+                    const previousRowData = this.delivery2[i - 1];
                     const previousRowGroup = previousRowData.id;
                     if (id === previousRowGroup) {
                         this.rowGroupMetadata[id].size++;
@@ -114,15 +114,15 @@ export class ListCorridaComponent implements OnInit {
         }
     }
 
-    getCorridas(): void {
-        this.service.getAllCorridas()
-        .subscribe(corridas => this.corrida = corridas);
-    }
+    // getDeliveries(): void {
+    //     this.service.getAllDeliveries()
+    //     .subscribe(deliverys => this.delivery = deliverys);
+    // }
 
-    explodeCorridas(): void {
-        this.corrida.forEach(cor => {
+    explodeDeliveries(): void {
+        this.delivery.forEach(cor => {
             cor.itinerario.ponto.forEach(p => {
-                this.corrida2.push({
+                this.delivery2.push({
                     id: cor.id,
                     status: cor.status,
                     data: cor.data,
@@ -144,7 +144,7 @@ export class ListCorridaComponent implements OnInit {
     }
 
     checkIfHaveMoneyEnvolved(): boolean {
-        return this.corrida.some(this.money);
+        return this.delivery.some(this.money);
     }
 
     money(element): boolean {

@@ -3,12 +3,12 @@
     <div class="row">
         <div class="col col-lg-12">
             <div class="buttons-container">
-                <button class="btn btn-success" id="button-add-corrida" [routerLink]="['add-corrida']">Adicionar Corrida</button>
-                <button class="btn btn-secondary" id="button-edit-corrida" (click)="onClickEdit()">Editar Corrida</button>
-                <button class="btn btn-danger" id="button-delete-corrida" (click)="onClickDelete()">Deletar Corrida</button>
+                <button class="btn btn-success" id="button-add-delivery" [routerLink]="['add-delivery']">Adicionar Corrida</button>
+                <button class="btn btn-secondary" id="button-edit-delivery" (click)="onClickEdit()">Editar Corrida</button>
+                <button class="btn btn-danger" id="button-delete-delivery" (click)="onClickDelete()">Deletar Corrida</button>
             </div>
             <div class="content-section implementation">
-                <p-table [value]="corrida2" sortField="corrida2" sortMode="single" (onSort)="onSort()" selectionMode="single" [(selection)]="selectedCorrida">
+                <p-table [value]="delivery2" sortField="delivery2" sortMode="single" (onSort)="onSort()" selectionMode="single" [(selection)]="selectedDelivery">
                     <ng-template pTemplate="header">
                         <tr class="text-center">
                             <th rowspan="2">ID</th>

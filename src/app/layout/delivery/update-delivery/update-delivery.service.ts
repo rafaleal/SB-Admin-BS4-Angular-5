@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Corrida } from '../../../domain/corrida';
+import { Delivery } from '../../../domain/delivery';
 
 @Injectable()
-export class UpdateCorridaService {
+export class UpdateDeliveryService {
 
   constructor(private http: HttpClient) { }
 
-  putCorrida(corrida: Corrida) {
+  putDelivery(delivery: Delivery) {
       //
   }
 

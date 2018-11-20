@@ -3,8 +3,12 @@
 }
 
 .cliente-container {
-    display: flex;
-    justify-content: space-between;
+    margin-bottom: 2em;
+    display: inline-block;
+
+    .button-add-cliente {
+        margin-left: 0.5em;
+    }
 }
 
 fieldset.col-md-6 {
@@ -12,6 +16,6 @@ fieldset.col-md-6 {
     padding-right: 0;
 }
 
-app-add-rota {
+app-add-route {
     padding: 1em;
 }

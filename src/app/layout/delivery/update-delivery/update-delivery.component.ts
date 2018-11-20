@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 
 @Component({
-  selector: 'app-update-corrida',
-  templateUrl: './update-corrida.component.html',
-  styleUrls: ['./update-corrida.component.scss'],
+  selector: 'app-update-delivery',
+  templateUrl: './update-delivery.component.html',
+  styleUrls: ['./update-delivery.component.scss'],
   animations: [routerTransition()]
 })
-export class UpdateCorridaComponent implements OnInit {
+export class UpdateDeliveryComponent implements OnInit {
 
   constructor() { }
 
