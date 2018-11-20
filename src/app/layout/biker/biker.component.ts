@@ -3,7 +3,6 @@ import { routerTransition } from '../../router.animations';
 import { Biker } from '../../domain/biker';
 import { BikerService } from './biker.service';
 import * as cloneDeep from 'lodash/cloneDeep';
-import { PessoaFisica } from '../../domain/pessoaFisica';
 
 @Component({
   selector: 'app-biker',
