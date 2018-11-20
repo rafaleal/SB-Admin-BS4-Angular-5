@@ -14,4 +14,11 @@ export const
     BIKER_SUMMARY_API_URL = prefix + api + '/bikers/summary',
     BIKER_GET_ALL_API_URL = prefix + api + '/bikers',
     BIKER_POST_API_URL = prefix + api + '/biker/new',
-    BIKER_DEFAULT_API_URL = prefix + api + '/biker/{id}';
+    BIKER_DEFAULT_API_URL = prefix + api + '/biker/{id}',
+    CUSTOMER_GET_ALL_API_URL = prefix + api + '/customers',
+    NATURAL_CUSTOMER_POST_API_URL = prefix + api + '/natural-customer/new',
+    NATURAL_CUSTOMER_GET_ALL_API_URL = prefix + api + '/natural-customers',
+    NATURAL_CUSTOMER_DEFAULT_API_URL = prefix + api + '/natural-customer/{id}',
+    LEGAL_CUSTOMER_POST_API_URL = prefix + api + '/legal-customer/new',
+    LEGAL_CUSTOMER_GET_ALL_API_URL = prefix + api + '/legal-customers',
+    LEGAL_CUSTOMER_DEFAULT_API_URL = prefix + api + '/legal-customer/{id}';
