@@ -1,9 +1,9 @@
-<div id="rota">
+<div id="route">
     <div class="font-bold">
         <p id="route-label">Rota</p>
     </div>
-    <div class="add-route-container col-md-12">
-        <div id="input-and-display-address" class="col-lg-6">
+    <div class="add-route-container">
+        <div id="input-and-display-address" class="col col-xl-6 col-lg-12">
             <div class="form-group">
                 <input class="form-control" #search [formControl]="searchControl" type="text" placeholder="Search for Location" autocorrect="off"
                     autocapitalize="off" spellcheck="off">
@@ -14,8 +14,8 @@
                         <div class="letter-marker">{{ alphabeticLabels[index] }}</div>
                         <div>
                             <li>
-                                <div>{{ address.logradouro }}</div>
-                                <input class="address-complement" placeholder="Ex.: AP 65 ou CASA 2" [(ngModel)]="addresses[index].complemento">
+                                <div>{{ address.street }}</div>
+                                <input class="address-complement" placeholder="Ex.: AP 65 ou CASA 2" [(ngModel)]="addresses[index].additionalInfo">
                             </li>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div id="map" class="col-lg-6">
+        <div id="map" class="col col-xl-6 col-lg-12">
             <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false">
 
                 <div *ngIf="markers.length === 1">
@@ -46,5 +46,6 @@
 
             </agm-map>
         </div>
+        <pre>{{ points | json }}</pre>
     </div>
 </div>

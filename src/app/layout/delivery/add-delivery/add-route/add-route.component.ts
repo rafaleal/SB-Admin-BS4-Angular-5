@@ -1,17 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, OnDestroy, Output, Input, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AgmMap, MapsAPILoader } from '@agm/core';
 import * as _ from 'lodash';
 import { } from 'googlemaps';
-import { Endereco } from '../../../../domain/endereco';
+import { Address } from '../../../../domain/address';
+import { Route } from '../../../../domain/route';
+import { Point } from '../../../../domain/point';
+import { Delivery } from '../../../../domain/delivery';
 
 
 @Component({
-  selector: 'app-add-rota',
-  templateUrl: './add-rota.component.html',
-  styleUrls: ['./add-rota.component.scss']
+  selector: 'app-add-route',
+  templateUrl: './add-route.component.html',
+  styleUrls: ['./add-route.component.scss']
 })
-export class AddRotaComponent implements OnInit, OnDestroy {
+export class AddRouteComponent implements OnInit, OnDestroy {
 
     autoComplete: google.maps.places.Autocomplete;
 
@@ -23,7 +26,14 @@ export class AddRotaComponent implements OnInit, OnDestroy {
     distancePrice: number;
     taxPrice: number;
 
-    addresses: Endereco[];
+    addresses: Address[];
+    points: Point[];
+
+    @Input()
+    delivery: Delivery;
+
+    @Output()
+    deliveryChange: EventEmitter<Delivery> = new EventEmitter<Delivery>();
 
     alphabeticLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     labelIndex: number;
@@ -57,12 +67,16 @@ export class AddRotaComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-
         this.searchControl = new FormControl();
-        this.addresses = [];
+        this.initializeRouteAndComponents();
+        this.setGoogleMaps();
+
+    }
+
+    setGoogleMaps(): void {
         this.maps.mapReady.subscribe(
             mapReady => this.directionsDisplay.setMap(mapReady),
-            e => console.log('Error setting map in DirectionRenderer')
+            e => console.log('Error setting map in DirectionRenderer', e)
         );
 
         this.labelIndex = 0;
@@ -71,14 +85,9 @@ export class AddRotaComponent implements OnInit, OnDestroy {
             .load()
             .then(() => {
                 // services have to be initialized inside MapsApiLoader to work
-                this.directionsService = new google.maps.DirectionsService();
-                this.directionsRequest = {} as google.maps.DirectionsRequest;
-                this.directionsDisplay = new google.maps.DirectionsRenderer();
+                this.initializeGoogleMapsServices();
 
-                // set Places Autocomplete
-                this.autoComplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
-                this.autoComplete.setTypes(['address']);
-                this.autoComplete.setComponentRestrictions({country: 'br'});
+                this.setPlacesAutocomplete();
 
                 // workaround to restrict Autocomplete to get addresses within the chosen city boundaries
                 this.maps.boundsChange.subscribe(bounds => this.autoComplete.setBounds(bounds));
@@ -86,7 +95,6 @@ export class AddRotaComponent implements OnInit, OnDestroy {
                 this.setupPlaceChangedListener();
             })
             .catch(e => console.log('Error loading MapsApi', e));
-
     }
 
     setupPlaceChangedListener(): void {
@@ -103,12 +111,20 @@ export class AddRotaComponent implements OnInit, OnDestroy {
                 const latitude = place.geometry.location.lat();
                 const longitude = place.geometry.location.lng();
 
-                this.addresses.push({
-                    logradouro: place.formatted_address,
-                    complemento: '',
-                    latitude: latitude,
-                    longitude: longitude
-                });
+                const address = {
+                    street: place.formatted_address,
+                    additionalInfo: '',
+                    lat: latitude,
+                    lng: longitude
+                } as Address;
+
+                this.addresses.push(address);
+
+                const point: Point = new Point();
+                point.address = address;
+                this.addAddressToPoint(address);
+
+                this.addPointToRoute(point);
 
                 this.markers.push({
                     lat: latitude,
@@ -128,10 +144,7 @@ export class AddRotaComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.directionsRequest.origin = _.first(this.markers);
-        this.directionsRequest.destination = _.last(this.markers);
-        this.directionsRequest.travelMode = google.maps.TravelMode.DRIVING;
-        this.directionsRequest.optimizeWaypoints = true;
+        this.setDirectionsRequest();
 
         if (length > 2) {
             if (length >= 12) {
@@ -148,6 +161,18 @@ export class AddRotaComponent implements OnInit, OnDestroy {
             console.log('Waypoints: ', JSON.stringify(waypoints));
         }
 
+        this.callDirectionServiceRoute();
+
+    }
+
+    setDirectionsRequest(): void {
+        this.directionsRequest.origin = _.first(this.markers);
+        this.directionsRequest.destination = _.last(this.markers);
+        this.directionsRequest.travelMode = google.maps.TravelMode.DRIVING;
+        this.directionsRequest.optimizeWaypoints = true;
+    }
+
+    callDirectionServiceRoute(): void {
         this.directionsService.route(
             this.directionsRequest,
             (
@@ -173,6 +198,7 @@ export class AddRotaComponent implements OnInit, OnDestroy {
         }
         this.distance = parseFloat((distance / 1000).toFixed(2));
         console.log('Distance total: ', this.distance);
+        this.delivery.route.totalDistance = this.distance;
     }
 
     calcDistancePrice(): void {
@@ -180,6 +206,7 @@ export class AddRotaComponent implements OnInit, OnDestroy {
         if (this.distance > 2) {
             this.distancePrice = this.distance * 4;
         }
+        this.delivery.route.totalDue = this.distancePrice;
     }
 
     trackByIndex(index: number, obj: any): any {
@@ -188,5 +215,35 @@ export class AddRotaComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         google.maps.event.removeListener(this.idListener);
+    }
+
+    initializeGoogleMapsServices(): void {
+        this.directionsService = new google.maps.DirectionsService();
+        this.directionsRequest = {} as google.maps.DirectionsRequest;
+        this.directionsDisplay = new google.maps.DirectionsRenderer();
+    }
+
+    setPlacesAutocomplete(): void {
+        this.autoComplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
+        this.autoComplete.setTypes(['address']);
+        this.autoComplete.setComponentRestrictions({country: 'br'});
+    }
+
+    initializeRouteAndComponents(): void {
+        this.points = [];
+        this.addresses = [];
+        this.markers = [];
+    }
+
+    addAddressToPoint(address: Address): void {
+        const newPoint = new Point();
+        newPoint.address = address;
+        this.points.push(newPoint);
+    }
+
+    addPointToRoute(point: Point): void {
+        this.delivery.route.addPoint(point);
+        console.log(JSON.stringify(this.delivery.route));
+        this.deliveryChange.emit(this.delivery);
     }
 }
