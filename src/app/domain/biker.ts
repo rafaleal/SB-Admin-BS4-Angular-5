@@ -1,5 +1,4 @@
 import { PessoaFisica } from './pessoaFisica';
-import { SalarioCalculavel } from './salario-calculavel';
 
 export class Biker extends PessoaFisica {
     id: number;
