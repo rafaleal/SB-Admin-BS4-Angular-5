@@ -3,7 +3,11 @@ import { PaymentTypeEnum } from './enums';
 import { Point } from './point';
 
 export class MoneyPayment extends Payment {
-    coinChange: number | boolean;
+    coinChange: number;
     pointToPay: Point;
-    type = PaymentTypeEnum.Money;
+
+    constructor(amount: number) {
+        super(amount);
+        this.paymentType = 'MONEY';
+    }
 }

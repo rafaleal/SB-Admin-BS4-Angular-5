@@ -1,7 +1,12 @@
 import { Customer } from './customer';
 import { CustomerTypeEnum } from '../enums';
+import { Address } from '../address';
 
 export class NaturalCustomer extends Customer {
     cpf: string;
-    customerType = CustomerTypeEnum.Natural;
+
+    constructor() {
+        super();
+        this.address = new Address();
+    }
 }

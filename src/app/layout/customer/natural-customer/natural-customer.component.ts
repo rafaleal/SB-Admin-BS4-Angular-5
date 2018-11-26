@@ -80,7 +80,7 @@ export class NaturalCustomerComponent implements OnInit {
   populateNaturalCustomersDetailsTable(): void {
       this.cols = [
           { field: 'id', header: 'Id' },
-          { field: 'fullName', header: 'Nome' },
+          { field: 'name', header: 'Nome' },
           { field: 'cpf', header: 'CPF' },
           { field: 'phone', header: 'Telefone' },
           { field: 'email', header: 'Email' },

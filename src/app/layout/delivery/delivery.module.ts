@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DeliveryRoutingModule } from './delivery-routing.module';
 import { DeliveryComponent } from './delivery.component';
-import { PageHeaderModule } from '../../shared';
+import { PageHeaderModule, SharedPipesModule } from '../../shared';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,7 +36,8 @@ import { BikerModule } from '../biker/biker.module';
     AgmCoreModule.forRoot({
         apiKey: CONFIG.GOOGLE_API_KEY,
         libraries: ['places', 'geometry']
-    })
+    }),
+    SharedPipesModule
   ],
   declarations: [
       DeliveryComponent,

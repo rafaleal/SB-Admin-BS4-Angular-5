@@ -1,3 +1,5 @@
+$bs-green: rgb(40, 167, 69);
+
 .font-bold {
     font-weight: bold;
 }
@@ -18,4 +20,27 @@ fieldset.col-md-6 {
 
 app-add-route {
     padding: 1em;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+#button-save-delivery {
+    margin-left: 2em;
+}
+
+#button-cancel-delivery {
+    border-color: $bs-green;
+    border-width: 1px;
+    background-color: white;
+    color: $bs-green;
+
+    &:hover {
+        border: 0;
+        background-color: $bs-green;
+        color: white;
+    }
 }

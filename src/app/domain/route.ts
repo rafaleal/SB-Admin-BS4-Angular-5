@@ -4,7 +4,7 @@ import { SumAmount } from './sum-amount';
 
 export class Route implements SumAmount {
     id?: number;
-    point: Point[] = [];
+    points: Point[] = [];
     totalDistance: number;
     totalDue: number = 0;
     valorDistancia: number = 0;
@@ -20,13 +20,13 @@ export class Route implements SumAmount {
         this.valorDistancia += this.totalDistance * this.taxaDistancia.valorTaxa;
     }
 
-    somarValoresTempoEspera(): void {
-        this.point.forEach(point => {
-            this.valorEsperaTotal += point.sumTotalAmount();
+    somarValoresTempoEspera(waitingTax: number): void {
+        this.points.forEach(points => {
+            this.valorEsperaTotal += points.waitingTime * waitingTax ;
         });
     }
 
-    addPoint(point: Point) {
-        this.point.push(point);
+    addPoint(points: Point) {
+        this.points.push(points);
     }
 }

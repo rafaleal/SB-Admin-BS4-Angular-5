@@ -7,6 +7,7 @@ import { Address } from '../../../../domain/address';
 import { Route } from '../../../../domain/route';
 import { Point } from '../../../../domain/point';
 import { Delivery } from '../../../../domain/delivery';
+import { PaymentTypeEnum } from '../../../../domain/enums';
 
 
 @Component({
@@ -27,7 +28,6 @@ export class AddRouteComponent implements OnInit, OnDestroy {
     taxPrice: number;
 
     addresses: Address[];
-    points: Point[];
 
     @Input()
     delivery: Delivery;
@@ -122,7 +122,6 @@ export class AddRouteComponent implements OnInit, OnDestroy {
 
                 const point: Point = new Point();
                 point.address = address;
-                this.addAddressToPoint(address);
 
                 this.addPointToRoute(point);
 
@@ -202,9 +201,9 @@ export class AddRouteComponent implements OnInit, OnDestroy {
     }
 
     calcDistancePrice(): void {
-        this.distancePrice = 12;
-        if (this.distance > 2) {
-            this.distancePrice = this.distance * 4;
+        this.distancePrice = this.distance * 4;
+        if (this.distancePrice < 12) {
+            this.distancePrice = 12;
         }
         this.delivery.route.totalDue = this.distancePrice;
     }
@@ -230,20 +229,17 @@ export class AddRouteComponent implements OnInit, OnDestroy {
     }
 
     initializeRouteAndComponents(): void {
-        this.points = [];
         this.addresses = [];
         this.markers = [];
-    }
-
-    addAddressToPoint(address: Address): void {
-        const newPoint = new Point();
-        newPoint.address = address;
-        this.points.push(newPoint);
     }
 
     addPointToRoute(point: Point): void {
         this.delivery.route.addPoint(point);
         console.log(JSON.stringify(this.delivery.route));
         this.deliveryChange.emit(this.delivery);
+    }
+
+    isPointsEmpty(): boolean {
+        return this.delivery.route.points.length > 0;
     }
 }

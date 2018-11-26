@@ -21,4 +21,6 @@ export const
     NATURAL_CUSTOMER_DEFAULT_API_URL = prefix + api + '/natural-customer/{id}',
     LEGAL_CUSTOMER_POST_API_URL = prefix + api + '/legal-customer/new',
     LEGAL_CUSTOMER_GET_ALL_API_URL = prefix + api + '/legal-customers',
-    LEGAL_CUSTOMER_DEFAULT_API_URL = prefix + api + '/legal-customer/{id}';
+    LEGAL_CUSTOMER_DEFAULT_API_URL = prefix + api + '/legal-customer/{id}',
+    CASH_FLOW_CUSTOMERS_API_URL = CUSTOMER_GET_ALL_API_URL + '/cash-flow',
+    CASH_FLOW_BIKERS_API_URL = BIKER_GET_ALL_API_URL + '/cash-flow';

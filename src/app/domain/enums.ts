@@ -1,31 +1,31 @@
 export enum ContractTypeEnum {
-    Billed = 'BILLED',
-    Sponateneous = 'SPONTANEOUS'
+    Billed,
+    Spontaneous
 }
 
 export enum CustomerTypeEnum {
-    Legal = 'LEGAL',
-    Natural = 'NATURAL'
+    Legal,
+    Natural
 }
 
 export enum DeliveryStatusEnum {
-    Registered = 'REGISTERED',
-    Ongoing = 'ONGOING',
-    Completed = 'COMPLETED'
+    Registered,
+    Ongoing,
+    Completed,
+    Canceled
 }
 
 export enum PaymentStatusEnum {
-    Pending = 'PENDING',
-    Payed = 'Payed'
+    Pending,
+    Payed
 }
 
 export enum PaymentTypeEnum {
-    Money = 'MONEY',
-    Transfer = 'TRANSFER'
+    Money,
+    Transfer
 }
 
 export enum PhoneTypeEnum {
-    LandLine = 'LAND_LINE',
-    Mobile = 'MOBILE'
+    LandLine,
+    Mobile
 }
-

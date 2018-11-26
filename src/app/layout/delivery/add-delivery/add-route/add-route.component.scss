@@ -8,6 +8,7 @@ input[placeholder] { text-overflow: ellipsis; }
 .add-route-container {
     display: flex;
     padding: 0%;
+    margin-bottom: 5em;
 
     #input-and-display-address {
         justify-content: flex-start;
@@ -65,7 +66,11 @@ agm-map {
     align-self: center;
 }
 
-.address-complement {
+.address-complement, .personResponsible, .scheduledArrivalTime, .waitingTime  {
     border: none;
+}
+
+.center {
+    vertical-align: middle;
 }
 

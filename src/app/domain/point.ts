@@ -1,21 +1,12 @@
 import { Address } from './address';
-import { Responsavel } from './responsavel';
 import { TaxaEspera } from './taxa';
 import { SumAmount } from './sum-amount';
 
-export class Point implements SumAmount {
+export class Point {
     id: number;
-    amount: number = 0;
     waitingTime: number;
-    arrivalTime: string;
+    scheduledArrivalTime: string;
     address: Address;
-    responsible?: Responsavel;
-    waitingTax: TaxaEspera;
+    personResponsible: string;
 
-    sumTotalAmount(): number {
-        if (this.waitingTime) {
-            this.amount = this.waitingTime * this.waitingTax.valorTaxa;
-        }
-        return this.amount;
-    }
 }

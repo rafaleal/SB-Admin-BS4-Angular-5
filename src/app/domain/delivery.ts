@@ -6,6 +6,8 @@ import { Time } from '@angular/common';
 import { DeliveryStatusEnum } from './enums';
 import { Customer } from './customer/customer';
 import { Biker } from './biker';
+import * as _ from 'lodash';
+import { MoneyPayment } from './money-payment';
 
 export class Delivery implements HorarioRegistravel {
     id: number;
@@ -15,7 +17,15 @@ export class Delivery implements HorarioRegistravel {
     collectUpTime: Time;
     handoverTime: Time;
     route: Route;
-    payment: Payment;
+    payment: Payment | MoneyPayment;
     customer: Customer;
     biker: Biker;
+
+    constructor() {
+        this.statusDelivery = DeliveryStatusEnum.Registered;
+        this.route = new Route();
+        this.customer = {} as Customer;
+        this.biker = new Biker();
+    }
+
 }

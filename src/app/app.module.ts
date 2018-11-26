@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -34,6 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
         AppRoutingModule,
         RouterModule,
         FormsModule,
+        ToastrModule.forRoot(),
     ],
     declarations: [AppComponent],
     providers: [

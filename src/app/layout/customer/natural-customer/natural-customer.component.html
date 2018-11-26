@@ -18,15 +18,15 @@
                     </td>
                 </tr>
             </ng-template>
-    
+
             <ng-template pTemplate="summary" let-rowData>
                 <div style="text-align:left">
                     <button type="button" pButton icon="fas fa-plus" (click)="showDialogToAdd()" label="Add"></button>
                 </div>
             </ng-template>
-    
+
         </p-table>
-    
+
         <p-dialog header="Natural Customer Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="350">
             <div class="ui-g ui-fluid" *ngIf="naturalCustomer">
                 <div class="ui-g-12">
@@ -39,10 +39,10 @@
                 </div>
                 <div class="ui-g-12">
                     <div class="ui-g-4">
-                        <label for="nome">Nome</label>
+                        <label for="name">Nome</label>
                     </div>
                     <div class="ui-g-8">
-                        <input pInputText id="nome" [(ngModel)]="naturalCustomer.fullName" />
+                        <input pInputText id="name" [(ngModel)]="naturalCustomer.name" />
                     </div>
                 </div>
                 <div class="ui-g-12">
@@ -55,10 +55,10 @@
                 </div>
                 <div class="ui-g-12">
                     <div class="ui-g-4">
-                        <label for="telefone">Telefone</label>
+                        <label for="phone">Telefone</label>
                     </div>
                     <div class="ui-g-8">
-                        <input pInputText id="telefone" [(ngModel)]="naturalCustomer.phone" />
+                        <input pInputText id="phone" [(ngModel)]="naturalCustomer.phone" />
                     </div>
                 </div>
                 <div class="ui-g-12">

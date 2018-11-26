@@ -8,11 +8,15 @@ import { routerTransition } from '../../../router.animations';
 import { Customer } from '../../../domain/customer/customer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Delivery } from '../../../domain/delivery';
-import { DeliveryStatusEnum } from '../../../domain/enums';
+import { DeliveryStatusEnum, PaymentTypeEnum } from '../../../domain/enums';
 import { AddDeliveryService } from './add-delivery.service';
 import { Biker } from '../../../domain/biker';
 import { AddRouteComponent } from './add-route/add-route.component';
 import { Route } from '../../../domain/route';
+import * as _ from 'lodash';
+import { DropdownObject } from '../../../shared/pipes/pipes';
+import { MoneyPayment } from '../../../domain/money-payment';
+import { Payment } from '../../../domain/payment';
 
 @Component({
     selector: 'app-add-delivery',
@@ -23,9 +27,8 @@ import { Route } from '../../../domain/route';
 export class AddDeliveryComponent implements OnInit {
     allCustomers: Customer[] = [];
     allBikers: Biker[] = [];
-    // selectedCustomer: Customer;
-    // selectedBiker: Biker;
     delivery: Delivery;
+    paymentOptions = PaymentTypeEnum;
 
     constructor(
         private route: ActivatedRoute,
@@ -45,9 +48,29 @@ export class AddDeliveryComponent implements OnInit {
 
     initializeDelivery(): void {
         this.delivery = new Delivery();
-        this.delivery.route = new Route();
-        this.delivery.biker = new Biker();
-        this.delivery.customer = {} as Customer;
+    }
+
+    isEmpty(object: Object) {
+        return _.isEmpty(object);
+    }
+
+    onClickSave(): void {
+        // this.addDeliveryService.postDelivery(this.delivery)
+        //     .subscribe();
+    }
+
+    isMoney(): boolean {
+         return this.delivery.payment instanceof MoneyPayment;
+    }
+
+    setPaymentType(value: DropdownObject): void {
+        console.log('Inide setPaymentType', value);
+        const amount = this.delivery.route.totalDue;
+        if (value.name === 'Money') {
+            this.delivery.payment = new MoneyPayment(amount);
+        } else {
+            this.delivery.payment = new Payment(amount);
+        }
     }
 
 }

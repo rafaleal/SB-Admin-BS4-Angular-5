@@ -27,7 +27,7 @@
 
         </p-table>
 
-        <p-dialog header="Legal Customer Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="350">
+        <p-dialog header="Legal Customer Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="400">
             <div class="ui-g ui-fluid" *ngIf="legalCustomer">
                 <div class="ui-g-12">
                     <div class="ui-g-4">
@@ -42,7 +42,7 @@
                         <label for="fantasyName">Nome Fantasia</label>
                     </div>
                     <div class="ui-g-8">
-                        <input pInputText id="fantasyName" [(ngModel)]="legalCustomer.fantasyName" />
+                        <input pInputText id="fantasyName" [(ngModel)]="legalCustomer.name" />
                     </div>
                 </div>
                 <div class="ui-g-12">
@@ -58,7 +58,8 @@
                         <label for="cnpj">CNPJ</label>
                     </div>
                     <div class="ui-g-8">
-                        <input pInputText id="cnpj" [(ngModel)]="legalCustomer.cnpj" />
+                        <p-inputMask mask="999.999.999/9999-99" id="cnpj" [(ngModel)]="legalCustomer.cnpj"></p-inputMask>
+                        <p-message *ngIf="legalCustomer.cnpj && legalCustomer.validateCNPJ()" severity="error" text="CNPJ não válido"></p-message>
                     </div>
                 </div>
                 <div class="ui-g-12">
@@ -66,7 +67,7 @@
                         <label for="phone">Telefone</label>
                     </div>
                     <div class="ui-g-8">
-                        <input pInputText id="phone" [(ngModel)]="legalCustomer.phone" />
+                        <p-inputMask mask="(99) 99999-9999" id="phone" [(ngModel)]="legalCustomer.phone"></p-inputMask>
                     </div>
                 </div>
                 <div class="ui-g-12">
@@ -82,15 +83,23 @@
                         <label for="address">Endereço</label>
                     </div>
                     <div class="ui-g-8">
-                        <input pInputText id="address" [(ngModel)]="legalCustomer.address" />
+                        <input pInputText id="address-street" [(ngModel)]="legalCustomer.address.street" />
                     </div>
                 </div>
                 <div class="ui-g-12">
+                        <div class="ui-g-4">
+                            <label for="address">Complemento</label>
+                        </div>
+                        <div class="ui-g-8">
+                            <input pInputText id="address-additional-info" [(ngModel)]="legalCustomer.address.additionalInfo" />
+                        </div>
+                    </div>
+                <div class="ui-g-12" style="margin-bottom: 1em">
                     <div class="ui-g-4">
                         <label for="contract-type">Tipo Contrato</label>
                     </div>
                     <div class="ui-g-8">
-                        <input pDropdown id="contract-type" [(ngModel)]="legalCustomer.contractType" />
+                        <p-dropdown id="contract-type" [options]="contractTypes | enum" optionLabel="name" placeholder="Contrato" [style]="{'width':'100%'}" (onChange)="setContractType($event.value)" ></p-dropdown>
                     </div>
                 </div>
             </div>

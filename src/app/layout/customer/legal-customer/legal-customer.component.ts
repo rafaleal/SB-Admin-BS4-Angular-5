@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LegalCustomer } from '../../../domain/customer/legal-customer';
 import { LegalCustomerService } from './legal-customer.service';
 import * as cloneDeep from 'lodash/cloneDeep';
+import { ContractTypeEnum, CustomerTypeEnum } from '../../../domain/enums';
+import { DropdownObject } from '../../../shared/pipes/pipes';
 
 @Component({
   selector: 'app-legal-customer',
@@ -12,7 +14,7 @@ export class LegalCustomerComponent implements OnInit {
 
   displayDialog: boolean;
 
-  legalCustomer: LegalCustomer = {} as LegalCustomer;
+  legalCustomer: LegalCustomer;
 
   selectedLegalCustomer: LegalCustomer;
 
@@ -26,6 +28,8 @@ export class LegalCustomerComponent implements OnInit {
 
   summaryLegalCustomers: LegalCustomer[] = [];
 
+  contractTypes = ContractTypeEnum;
+
   constructor(private legalCustomerService: LegalCustomerService) { }
 
   ngOnInit() {
@@ -35,7 +39,7 @@ export class LegalCustomerComponent implements OnInit {
 
   showDialogToAdd() {
       this.newLegalCustomer = true;
-      this.legalCustomer = {} as LegalCustomer;
+      this.legalCustomer = new LegalCustomer();
       this.displayDialog = true;
   }
 
@@ -44,6 +48,7 @@ export class LegalCustomerComponent implements OnInit {
       if (this.newLegalCustomer) {
           // TODO add logger
           console.log(JSON.stringify(this.legalCustomer));
+        //   this.legalCustomer.contractType = this.legalCustomer.contractType.name.toUpperCase();
           this.legalCustomerService.postLegalCustomer(this.legalCustomer).subscribe(
             newLegalCustomer => this.legalCustomers.push(newLegalCustomer)
           );
@@ -80,7 +85,7 @@ export class LegalCustomerComponent implements OnInit {
   populateLegalCustomersDetailsTable(): void {
       this.cols = [
           { field: 'id', header: 'Id' },
-          { field: 'fantasyName', header: 'Nome Fantasia' },
+          { field: 'name', header: 'Nome Fantasia' },
           { field: 'socialReason', header: 'Razão Social' },
           { field: 'cnpj', header: 'CNPJ' },
           { field: 'phone', header: 'Telefone' },
@@ -89,6 +94,10 @@ export class LegalCustomerComponent implements OnInit {
           { field: 'contractType', header: 'Tipo Contrato' },
           { field: 'createdAt', header: 'Data de Registro' }
       ];
+  }
+
+  setContractType(value: DropdownObject) {
+      this.legalCustomer.contractType = value.name.toUpperCase();
   }
 
 }

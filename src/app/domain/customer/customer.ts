@@ -1,7 +1,5 @@
 import { Address } from '../address';
-import { Phone } from '../phone';
-import { Email } from '../email';
-import { CustomerTypeEnum, ContractTypeEnum } from '../enums';
+import { DropdownObject } from '../../shared/pipes/pipes';
 
 export abstract class Customer {
     id: number;
@@ -9,7 +7,7 @@ export abstract class Customer {
     address: Address;
     phone: string;
     email: string;
-    contractType: ContractTypeEnum;
-    customerType: CustomerTypeEnum;
+    contractType: string | DropdownObject;
+    customerType: string;
     createdAt: Date;
 }

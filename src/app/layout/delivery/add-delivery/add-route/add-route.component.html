@@ -1,4 +1,4 @@
-<div id="route">
+<div id="route-container">
     <div class="font-bold">
         <p id="route-label">Rota</p>
     </div>
@@ -46,6 +46,38 @@
 
             </agm-map>
         </div>
-        <pre>{{ points | json }}</pre>
+    </div>
+    <div id="points-container" class="col col-lg-12" *ngIf="isPointsEmpty()">
+        <div class="font-bold" >
+            <p id="points-label">Pontos</p>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Endereço</th>
+                    <th>Responsável</th>
+                    <th>Horário Agendado</th>
+                    <th>Tempo de Espera</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let point of delivery.route.points; let index = index; trackBy: trackByIndex;">
+                    <td class="line center">
+                        <div class="letter-marker"> {{ alphabeticLabels[index] }} </div>
+                    </td>
+                    <td>{{ point.address.street }}</td>
+                    <td>
+                        <input pInputText class="personResponsible" placeholder="Insira a pessoa responsável..." [(ngModel)]="point.personResponsible">
+                    </td>
+                    <td>
+                        <input pInputText class="scheduledArrivalTime" placeholder="Insira a hora agendada..." [(ngModel)]="point.scheduledArrivalTime">
+                    </td>
+                    <td>
+                        <input pInputText class="waitingTime" placeholder="Insira o tempo de espera..." [(ngModel)]="point.waitingTime">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
