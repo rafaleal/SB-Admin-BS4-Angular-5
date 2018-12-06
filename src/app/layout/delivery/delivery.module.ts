@@ -8,7 +8,6 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
-import { AddDeliveryService } from './add-delivery/add-delivery.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UpdateDeliveryComponent } from './update-delivery/update-delivery.component';
 import { ListDeliveryComponent } from './list-delivery/list-delivery.component';
@@ -19,6 +18,9 @@ import { CONFIG } from '../../../../config/config';
 import { AddRouteComponent } from './add-delivery/add-route/add-route.component';
 import { CustomerModule } from '../customer/customer.module';
 import { BikerModule } from '../biker/biker.module';
+import { InputMaskModule } from 'primeng/inputmask';
+import { DeliveryResolverGuard } from './update-delivery/delivery-resolver.guard';
+import { UpdateRouteComponent } from './update-delivery/update-route/update-route.component';
 
 @NgModule({
   imports: [
@@ -37,18 +39,20 @@ import { BikerModule } from '../biker/biker.module';
         apiKey: CONFIG.GOOGLE_API_KEY,
         libraries: ['places', 'geometry']
     }),
-    SharedPipesModule
+    SharedPipesModule,
+    InputMaskModule
   ],
   declarations: [
       DeliveryComponent,
       AddDeliveryComponent,
       UpdateDeliveryComponent,
       ListDeliveryComponent,
-      AddRouteComponent
+      AddRouteComponent,
+      UpdateRouteComponent
   ],
   providers: [
-      AddDeliveryService,
       DeliveryService,
+      DeliveryResolverGuard
   ]
 })
 export class DeliveryModule { }
