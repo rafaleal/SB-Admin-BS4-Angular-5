@@ -12,20 +12,27 @@ import { MoneyPayment } from './money-payment';
 export class Delivery implements HorarioRegistravel {
     id: number;
     createdAt: Date;
-    statusDelivery: DeliveryStatusEnum;
-    registeredTime: Time;
-    collectUpTime: Time;
-    handoverTime: Time;
+    statusDelivery: string;
+    registeredTime: string;
+    collectUpTime: string;
+    handoverTime: string;
     route: Route;
     payment: Payment | MoneyPayment;
     customer: Customer;
     biker: Biker;
 
     constructor() {
-        this.statusDelivery = DeliveryStatusEnum.Registered;
+        this.statusDelivery = 'REGISTERED';
         this.route = new Route();
         this.customer = {} as Customer;
         this.biker = new Biker();
+    }
+
+    isReadyToBeAdded(): boolean {
+        return _.isEmpty(this.customer)
+            || _.isEmpty(this.biker)
+            || _.isEmpty(this.payment)
+            || this.route.points.length < 2;
     }
 
 }
