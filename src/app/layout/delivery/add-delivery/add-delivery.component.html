@@ -9,7 +9,7 @@
                 </div>
                 <div class="cliente-container">
                     <p-dropdown [options]="allCustomers" [(ngModel)]="delivery.customer" optionLabel="name" placeholder="Selecione um cliente" [showClear]="!isEmpty(delivery.customer)"></p-dropdown>
-                    <span><button class="button-add-cliente" type="button" pButton icon="fas fa-plus" label="Add"></button></span>
+                    <a><button class="button-add-cliente" type="button" pButton icon="fas fa-plus" label="Add"></button></a>
                 </div>
             </fieldset>
         </div>
@@ -30,15 +30,15 @@
             <div class="font-bold">
                 <p id="payment-label">Pagamento</p>
             </div>
-            <p-dropdown class="col col-xl-6 col-lg-12" [options]="paymentOptions | enum" (onChange)="setPaymentType($event.value)" optionLabel="name" placeholder="Selecione forma de pagamento"></p-dropdown>
-            <div class="money-payment-container" *ngIf="isMoney()">
-                <input class="col col-xl-3 col-lg-12"  pInputText class="coin-change" placeholder="Insira o troco..." [(ngModel)]="delivery.payment.coinChange">
-                <p-dropdown class="col col-xl-3 col-lg-12" [options]="delivery.route.points" optionLabel="address.street" [(ngModel)]="delivery.payment.pointToPay"></p-dropdown>
-            </div>
+            <p-dropdown class="col col-xl-3 col-lg-12" [options]="paymentOptions | enum" (onChange)="setPaymentType($event.value)" optionLabel="name" placeholder="Selecione forma de pagamento"></p-dropdown>
+            <a class="money-payment-container" *ngIf="isMoney()">
+                <p-inputMask mask="R$ 99.99" class="col col-xl-1 col-lg-12 coin-change"  pInputText placeholder="Insira o troco..." [(ngModel)]="delivery.payment.coinChange"></p-inputMask>
+                <p-dropdown class="col col-xl-5 col-lg-12" [options]="delivery.route.points" optionLabel="address.street" [(ngModel)]="delivery.payment.pointToPay"></p-dropdown>
+            </a>
         </div>
         <div class="col col-lg-12 buttons-container">
             <button class="btn" id="button-cancel-delivery" [routerLink]="['']">Cancelar</button>
-            <button class="btn btn-success" id="button-save-delivery">Salvar</button>
+            <button class="btn btn-success" id="button-save-delivery" [disabled]="isDeliveryReadyToBeAdded()" (click)="onClickSave()">Salvar</button>
         </div>
     </div>
 </div>

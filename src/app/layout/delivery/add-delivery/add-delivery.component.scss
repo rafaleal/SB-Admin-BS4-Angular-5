@@ -25,7 +25,8 @@ app-add-route {
 .buttons-container {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 1rem;
+    margin-bottom: 1em;
+    margin-top: 2em;
 }
 
 #button-save-delivery {
@@ -43,4 +44,9 @@ app-add-route {
         background-color: $bs-green;
         color: white;
     }
+}
+
+.money-payment-container {
+    margin-left: 1em;
+    margin-top: 1em;
 }

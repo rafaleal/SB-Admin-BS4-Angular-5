@@ -8,15 +8,13 @@ import { routerTransition } from '../../../router.animations';
 import { Customer } from '../../../domain/customer/customer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Delivery } from '../../../domain/delivery';
-import { DeliveryStatusEnum, PaymentTypeEnum } from '../../../domain/enums';
-import { AddDeliveryService } from './add-delivery.service';
+import { PaymentTypeEnum } from '../../../domain/enums';
 import { Biker } from '../../../domain/biker';
-import { AddRouteComponent } from './add-route/add-route.component';
-import { Route } from '../../../domain/route';
 import * as _ from 'lodash';
 import { DropdownObject } from '../../../shared/pipes/pipes';
 import { MoneyPayment } from '../../../domain/money-payment';
 import { Payment } from '../../../domain/payment';
+import { DeliveryService } from '../delivery.service';
 
 @Component({
     selector: 'app-add-delivery',
@@ -33,7 +31,7 @@ export class AddDeliveryComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private addDeliveryService: AddDeliveryService
+        private addDeliveryService: DeliveryService
     ) {}
 
     ngOnInit() {
@@ -55,8 +53,8 @@ export class AddDeliveryComponent implements OnInit {
     }
 
     onClickSave(): void {
-        // this.addDeliveryService.postDelivery(this.delivery)
-        //     .subscribe();
+        this.addDeliveryService.postDelivery(this.delivery)
+            .subscribe((bla: any) => this.router.navigate(['../'], {relativeTo: this.route}));
     }
 
     isMoney(): boolean {
@@ -71,6 +69,11 @@ export class AddDeliveryComponent implements OnInit {
         } else {
             this.delivery.payment = new Payment(amount);
         }
+    }
+
+    isDeliveryReadyToBeAdded(): boolean {
+        console.log(JSON.stringify(this.delivery));
+        return this.delivery.isReadyToBeAdded();
     }
 
 }
