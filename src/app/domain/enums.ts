@@ -17,7 +17,7 @@ export enum DeliveryStatusEnum {
 
 export enum PaymentStatusEnum {
     Pending,
-    Payed
+    Paid
 }
 
 export enum PaymentTypeEnum {
@@ -29,3 +29,15 @@ export enum PhoneTypeEnum {
     LandLine,
     Mobile
 }
+
+export const DeliveryStatus = Object.freeze([
+    'REGISTERED',
+    'ONGOING',
+    'COMPLETED',
+    'CANCELED'
+]);
+
+export const PaymentStatus = Object.freeze([
+    'PENDING',
+    'PAID'
+]);
