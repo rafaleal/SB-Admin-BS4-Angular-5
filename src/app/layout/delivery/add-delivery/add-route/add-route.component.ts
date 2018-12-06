@@ -4,10 +4,8 @@ import { AgmMap, MapsAPILoader } from '@agm/core';
 import * as _ from 'lodash';
 import { } from 'googlemaps';
 import { Address } from '../../../../domain/address';
-import { Route } from '../../../../domain/route';
 import { Point } from '../../../../domain/point';
 import { Delivery } from '../../../../domain/delivery';
-import { PaymentTypeEnum } from '../../../../domain/enums';
 
 
 @Component({
@@ -46,11 +44,6 @@ export class AddRouteComponent implements OnInit, OnDestroy {
     lng: number = -49.269688;
 
     searchControl: FormControl;
-
-    headquarterMarker: any = {
-        lat: -25.420459,
-        lng: -49.269688
-    };
 
     markers: any[] = [];
 
