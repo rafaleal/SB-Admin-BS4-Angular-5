@@ -14,7 +14,7 @@ export class LegalCustomerComponent implements OnInit {
 
   displayDialog: boolean;
 
-  legalCustomer: LegalCustomer;
+  legalCustomer: LegalCustomer = new LegalCustomer();
 
   selectedLegalCustomer: LegalCustomer;
 

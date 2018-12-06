@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NaturalCustomer } from '../../../domain/customer/natural-customer';
 import { NaturalCustomerService } from './natural-customer.service';
 import * as cloneDeep from 'lodash/cloneDeep';
+import { ContractTypeEnum } from '../../../domain/enums';
+import { DropdownObject } from '../../../shared/pipes/pipes';
 
 @Component({
   selector: 'app-natural-customer',
@@ -12,7 +14,7 @@ export class NaturalCustomerComponent implements OnInit {
 
   displayDialog: boolean;
 
-  naturalCustomer: NaturalCustomer = {} as NaturalCustomer;
+  naturalCustomer: NaturalCustomer = new NaturalCustomer();
 
   selectedNaturalCustomer: NaturalCustomer;
 
@@ -26,16 +28,21 @@ export class NaturalCustomerComponent implements OnInit {
 
   summaryNaturalCustomers: NaturalCustomer[] = [];
 
+  contractTypes = ContractTypeEnum;
+
   constructor(private naturalCustomerService: NaturalCustomerService) { }
 
   ngOnInit() {
       this.populateNaturalCustomersDetailsTable();
-      this.naturalCustomerService.getAllNaturalCustomers().subscribe(data => this.naturalCustomers = data);
+      this.naturalCustomerService.getAllNaturalCustomers().subscribe(data => {
+          this.naturalCustomers = data;
+          console.log(JSON.stringify(this.naturalCustomer));
+        });
   }
 
   showDialogToAdd() {
       this.newNaturalCustomer = true;
-      this.naturalCustomer = {} as NaturalCustomer;
+      this.naturalCustomer = new NaturalCustomer();
       this.displayDialog = true;
   }
 
@@ -90,5 +97,8 @@ export class NaturalCustomerComponent implements OnInit {
       ];
   }
 
+  setContractType(value: DropdownObject) {
+    this.naturalCustomer.contractType = value.name.toUpperCase();
+  }
 
 }
