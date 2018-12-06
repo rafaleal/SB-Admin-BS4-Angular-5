@@ -1,3 +1,84 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Editar Corrida'" [icon]="'fa-flag-checkered'"></app-page-header>
+    <div class="row">
+            <div class="col col-xl-6 col-lg-12">
+                <fieldset class="col-md-6">
+                    <div class="font-bold">
+                        <p id="clienteLabel">Cliente</p>
+                    </div>
+                    <div class="cliente-container">
+                        <p>{{ delivery.customer.name }}</p>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col col-xl-6 col-lg-12">
+                <fieldset class="col-md-6">
+                    <div class="font-bold">
+                        <p id="bikerLabel">Biker</p>
+                    </div>
+                    <div class="biker-container">
+                        <p-dropdown [options]="allBikers" [(ngModel)]="delivery.biker" optionLabel="fullName" placeholder="Selecione um biker"></p-dropdown>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col col-xl-6 col-lg-12">
+                <fieldset class="col-md-6">
+                    <div class="font-bold">
+                        <p>Status Corrida</p>
+                    </div>
+                    <div class="delivery-status-container">
+                        <p-dropdown [options]="deliveryStatus | enum" optionLabel="name" (onChange)="setDeliveryStatus($event.value)"></p-dropdown>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col col-xl-6 col-lg-12">
+                <fieldset class="col-md-6">
+                    <div class="font-bold">
+                        <p>Status Pagamento</p>
+                    </div>
+                    <div class="payment-status-container">
+                        <p-dropdown [options]="paymentStatus | enum" optionLabel="name" (onChange)="setPaymentStatus($event.value)"></p-dropdown>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col col-xl-4 col-lg-12">
+                <fieldset class="col-md-4">
+                    <div class="font-bold">
+                        <p id="hour-registered">Horário Registrado</p>
+                    </div>
+                    <div>
+                        {{ delivery.registeredTime }}
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col col-xl-4 col-lg-12">
+                <fieldset class="col-md-4">
+                    <div class="font-bold">
+                        <p id="hour-collected">Horário Coletado</p>
+                    </div>
+                    <div>
+                        <input pInputText id="input-hour-collected" [(ngModel)]="delivery.collectUpTime" />
+                        <button class="btn" (click)="setCollectUpTime()">Now</button>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col col-xl-4 col-lg-12">
+                <fieldset class="col-md-4">
+                    <div class="font-bold">
+                        <p id="hour-handovered">Horário Entregue</p>
+                    </div>
+                    <div>
+                        <input pInputText id="input-hour-handovered" [(ngModel)]="delivery.handoverTime" />
+                        <button class="btn" (click)="setHandOverTime()">Now</button>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col col-lg-12">
+                <app-update-route [(delivery)]="delivery"></app-update-route>
+            </div>
+            <div class="col col-lg-12 buttons-container">
+                <button class="btn" id="button-cancel-delivery" [routerLink]="['']">Cancelar</button>
+                <button class="btn btn-success" id="button-save-delivery" (click)="onClickSave()">Salvar</button>
+            </div>
+        </div>
 </div>
