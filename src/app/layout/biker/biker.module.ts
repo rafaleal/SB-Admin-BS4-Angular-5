@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BikerRoutingModule } from './biker-routing.module';
@@ -23,6 +23,6 @@ import { BikerService } from './biker.service';
   declarations: [BikerComponent],
   providers: [
       BikerService
-  ]
+    ]
 })
 export class BikerModule { }

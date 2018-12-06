@@ -1,0 +1,126 @@
+<div class="card mb-3">
+    <div class="card-header">
+        Cliente Pessoa Física
+    </div>
+    <div class="card-body table-responsive">
+        <p-table [columns]="cols" [value]="naturalCustomers" selectionMode="single" [(selection)]="selectedNaturalCustomer" (onRowSelect)="onRowSelect($event)" [rows]="15">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns">
+                        {{col.header}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td>
+                        {{ rowData.id }}
+                    </td>
+                    <td>
+                        {{ rowData.name }}
+                    </td>
+                    <td>
+                        {{ rowData.cpf }}
+                    </td>
+                    <td>
+                        {{ rowData.phone }}
+                    </td>
+                    <td>
+                        {{ rowData.email }}
+                    </td>
+                    <td>
+                        {{ rowData.address?.street }}
+                    </td>
+                    <td>
+                        {{ rowData.contractType }}
+                    </td>
+                    <td>
+                        {{ rowData.createdAt | date: 'dd/MM/yyyy' }}
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="summary" let-rowData>
+                <div style="text-align:left">
+                    <button type="button" pButton icon="fas fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+                </div>
+            </ng-template>
+
+        </p-table>
+
+        <p-dialog header="Natural Customer Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="350">
+            <div class="ui-g ui-fluid" *ngIf="naturalCustomer">
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="vin">Id</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="id" [(ngModel)]="naturalCustomer.id" disabled=true/>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="name">Nome</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="name" [(ngModel)]="naturalCustomer.name" />
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="cpf">CPF</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <p-inputMask mask="999.999.999-99" id="cpf" [(ngModel)]="naturalCustomer.cpf"></p-inputMask>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="phone">Telefone</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <p-inputMask mask="(99) 99999-9999" id="phone" [(ngModel)]="naturalCustomer.phone"></p-inputMask>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="email" [(ngModel)]="naturalCustomer.email" />
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="address">Endereço</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="address-street" [(ngModel)]="naturalCustomer.address.street" />
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="additional-info">Complemento</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="address-additional-info" [(ngModel)]="naturalCustomer.address.additionalInfo" />
+                    </div>
+                </div>
+                <div class="ui-g-12" style="margin-bottom: 1em">
+                    <div class="ui-g-4">
+                        <label for="contract-type">Tipo Contrato</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <p-dropdown id="contract-type" [options]="contractTypes | enum" optionLabel="name" placeholder="Contrato" [style]="{'width':'100%'}" (onChange)="setContractType($event.value)" ></p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <p-footer>
+                <div class="ui-dialog-buttonpane ui-helper-clearfix" style="width: 100%">
+                    <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Deletar"></button>
+                    <button type="button" pButton icon="fa fa-check" (click)="save()" label="Salvar"></button>
+                </div>
+            </p-footer>
+        </p-dialog>
+    </div>
+</div>

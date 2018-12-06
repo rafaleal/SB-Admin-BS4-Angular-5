@@ -1,0 +1,44 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Adicionar Corrida'" [icon]="'fa-flag-checkered'"></app-page-header>
+    <div class="row">
+        <div class="col col-xl-6 col-lg-12">
+            <fieldset class="col-md-6">
+                <div class="font-bold">
+                    <!-- <pre>{{ delivery | json }}</pre> -->
+                    <p id="clienteLabel">Cliente</p>
+                </div>
+                <div class="cliente-container">
+                    <p-dropdown [options]="allCustomers" [(ngModel)]="delivery.customer" optionLabel="name" placeholder="Selecione um cliente" [showClear]="!isEmpty(delivery.customer)"></p-dropdown>
+                    <a><button class="button-add-cliente" type="button" pButton icon="fas fa-plus" label="Add"></button></a>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col col-xl-6 col-lg-12">
+            <fieldset class="col-md-6">
+                <div class="font-bold">
+                    <p id="bikerLabel">Biker</p>
+                </div>
+                <div class="biker-container">
+                    <p-dropdown [options]="allBikers" [(ngModel)]="delivery.biker" optionLabel="fullName" placeholder="Selecione um biker" [showClear]="!isEmpty(delivery.biker)"></p-dropdown>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col col-lg-12">
+            <app-add-route [(delivery)]="delivery"></app-add-route>
+        </div>
+        <div class="col col-lg-12 payment-container" *ngIf="!isEmpty(delivery.route.points)">
+            <div class="font-bold">
+                <p id="payment-label">Pagamento</p>
+            </div>
+            <p-dropdown class="col col-xl-3 col-lg-12" [options]="paymentOptions | enum" (onChange)="setPaymentType($event.value)" optionLabel="name" placeholder="Selecione forma de pagamento"></p-dropdown>
+            <a class="money-payment-container" *ngIf="isMoney()">
+                <p-inputMask mask="R$ 99.99" class="col col-xl-1 col-lg-12 coin-change"  pInputText placeholder="Insira o troco..." [(ngModel)]="delivery.payment.coinChange"></p-inputMask>
+                <p-dropdown class="col col-xl-5 col-lg-12" [options]="delivery.route.points" optionLabel="address.street" [(ngModel)]="delivery.payment.pointToPay"></p-dropdown>
+            </a>
+        </div>
+        <div class="col col-lg-12 buttons-container">
+            <button class="btn" id="button-cancel-delivery" [routerLink]="['']">Cancelar</button>
+            <button class="btn btn-success" id="button-save-delivery" [disabled]="isDeliveryReadyToBeAdded()" (click)="onClickSave()">Salvar</button>
+        </div>
+    </div>
+</div>

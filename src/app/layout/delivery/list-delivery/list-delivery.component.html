@@ -1,0 +1,67 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Corrida'" [icon]="'fa-flag-checkered'"></app-page-header>
+    <div class="row">
+        <div class="col col-lg-12">
+            <div class="buttons-container">
+                <button class="btn btn-success" id="button-add-delivery" [routerLink]="['add-delivery']">Adicionar Corrida</button>
+                <button class="btn btn-secondary" id="button-edit-delivery" (click)="onClickEdit()">Editar Corrida</button>
+                <button class="btn btn-danger" id="button-delete-delivery" (click)="onClickDelete()">Deletar Corrida</button>
+            </div>
+            <div class="content-section implementation">
+                <p-table [value]="listDelivery2" sortField="listDelivery2" sortMode="single" (onSort)="onSort()" selectionMode="single" [(selection)]="selectedDelivery">
+                    <ng-template pTemplate="header">
+                        <tr class="text-center">
+                            <th rowspan="2">ID</th>
+                            <th rowspan="2">Status Entrega</th>
+                            <th rowspan="2">Cliente</th>
+                            <th rowspan="2">Data</th>
+                            <th colspan="3">Horários</th>
+                            <th colspan="3">Itinerário</th>
+                            <th rowspan="2">Km</th>
+                            <th rowspan="2">Preço</th>
+                            <th rowspan="2">Forma de Pagamento</th>
+                            <th rowspan="2" *ngIf="checkIfHaveMoneyEnvolved()">Troco</th>
+                            <th rowspan="2">Tipo</th>
+                            <th rowspan="2">Biker</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th>Hora de Entrada</th>
+                            <th>Hora de Coleta</th>
+                            <th>Hora de Entrega</th>
+                            <th>Endereço</th>
+                            <th>Responsável</th>
+                            <th>Tempo de Espera</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                        <tr [pSelectableRow]="rowData.id" >
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.id }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.statusDelivery }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.customer }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.createdAt | date: 'dd/MM/yyyy' }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.registeredTime }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.collectUpTime }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.handoverTime }}</td>
+                            <td>{{ rowData.route.address }}</td>
+                            <td>{{ rowData.route.personResponsible }}</td>
+                            <td>{{ rowData.route.waitingTime }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.totalDistance }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.totalDue | currency:'BRL' }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.payment.paymentType }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex && checkIfHaveMoneyEnvolved()" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.payment.coinChange | currency:'BRL'}}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.customerType }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.biker }}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="10">Total</td>
+                            <td>{{ totalDistance }}</td>
+                            <td>{{ totalDue | currency:'BRL' }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

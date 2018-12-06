@@ -3,11 +3,10 @@ import * as CONFIG from '../../constants';
 import { Biker } from '../../domain/biker';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { catchError } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
+    'Content-Type': 'application/json',
   })
 };
 

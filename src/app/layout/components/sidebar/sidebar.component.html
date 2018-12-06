@@ -1,21 +1,21 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <div class="list-group">
-        <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <!-- <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Dashboard' | translate }}
-        </a>
+        </a> -->
         <a [routerLink]="['/biker']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-bicycle"></i>&nbsp;{{ 'Biker' | translate }}
         </a>
-        <a [routerLink]="['/cliente']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/customer']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-address-book"></i>&nbsp;{{ 'Cliente' | translate }}
         </a>
-        <a [routerLink]="['/corrida']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/delivery']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-flag-checkered"></i>&nbsp;{{ 'Corrida' | translate }}
         </a>
         <a [routerLink]="['/fluxo-de-caixa']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-usd"></i>&nbsp;{{ 'Fluxo de Caixa' | translate }}
         </a>
-        <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <!-- <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;{{ 'Charts' | translate }}
         </a>
         <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
@@ -131,6 +131,6 @@
                     </ul>
                 </li>
             </div>
-        </div>
+        </div> -->
     </div>
 </nav>

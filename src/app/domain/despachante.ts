@@ -1,7 +1,6 @@
 import { PessoaFisica } from './pessoaFisica';
-import { SalarioCalculavel } from './salario-calculavel';
 
-export class Despachante extends PessoaFisica implements SalarioCalculavel {
+export class Despachante extends PessoaFisica {
     id: number;
     valorSalario: number;
 
