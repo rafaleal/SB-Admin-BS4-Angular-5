@@ -16,7 +16,28 @@
                             <tbody>
                                 <tr *ngFor="let customer of customersCashFlow">
                                     <td *ngFor="let col of customerCols">
-                                        {{ customer[col.field] }}
+                                        {{ customer[col.field] | looseCurrency:'BRL' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">Despesas Fixas</div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let col of expensesCols">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let expense of expenses">
+                                    <td *ngFor="let col of expensesCols">
+                                        {{ expense[col.field] | looseCurrency:'BRL' }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -39,11 +60,17 @@
                             <tbody>
                                 <tr *ngFor="let biker of bikersCashFlow">
                                     <td *ngFor="let col of bikerCols">
-                                        {{ biker[col.field] }}
+                                        {{ biker[col.field] | looseCurrency:'BRL' }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">Lucro</div>
+                    <div class="card-body table-responsive" [ngStyle]="{'color':profit < 0 ? 'red' : 'green'}">
+                        {{ profit | looseCurrency:'BRL' }}
                     </div>
                 </div>
             </div>
