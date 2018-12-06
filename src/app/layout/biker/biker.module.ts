@@ -21,5 +21,8 @@ import { BikerService } from './biker.service';
     ButtonModule
   ],
   declarations: [BikerComponent],
+  providers: [
+      BikerService
+    ]
 })
 export class BikerModule { }
