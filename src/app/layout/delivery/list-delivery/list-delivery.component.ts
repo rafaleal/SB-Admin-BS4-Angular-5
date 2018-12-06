@@ -5,6 +5,8 @@ import { routerTransition } from '../../../router.animations';
 import * as _ from 'lodash';
 import { Route } from '../../../domain/route';
 import { DeliveryStatusEnum } from '../../../domain/enums';
+import { Delivery } from '../../../domain/delivery';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-delivery',
@@ -14,16 +16,16 @@ import { DeliveryStatusEnum } from '../../../domain/enums';
 })
 export class ListDeliveryComponent implements OnInit {
 
-    delivery: any[];
-    delivery2: any[];
+    listDelivery: Delivery[];
+    listDelivery2: any[];
     rowGroupMetadata: any;
     sales: any[];
     pagamento: any[];
     formaSelecionada: any;
     statusEntrega: any[];
     selectedStatusEntrega: any;
-    valorTotal: number;
-    distanciaTotal: number;
+    totalDue: number;
+    totalDistance: number;
     selectedDelivery: any;
 
     constructor(private router: Router,
@@ -33,34 +35,8 @@ export class ListDeliveryComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.delivery = [
-            {id: 1, status: 'REGISTRADO', data: '07/06/2018', horarios: {horaEntrada: '9:00', horaColeta: '9:15', horaEntrega: ''},
-            itinerario: {ponto: [{endereco: 'Praca Alfredo Andersen', responsavel: 'Adilson', tempoEspera: '30min'},
-            {endereco: 'Banco do Brasil - Praca Toaldo', responsavel: 'Jadir', tempoEspera: ''}]}, km: '15',
-            cliente: 'Mueller', biker: 'Rodrigo', preco: '35', formaPagamento: {nome: 'Dinheiro', troco: '50'}, tipo: 'Esporadico'},
-            {id: 2, status: 'INICIADO', data: '07/06/2018', horarios: {horaEntrada: '9:00', horaColeta: '9:15', horaEntrega: ''},
-            itinerario: {ponto: [{endereco: 'Praca Tiradentes', responsavel: 'Adilson', tempoEspera: '30min'},
-            {endereco: 'Banco Itau - XV Novembro', responsavel: 'Moacir', tempoEspera: '15min'}]}, km: '6',
-            cliente: 'Otavio', biker: 'Lincoln', preco: '16', formaPagamento: {nome: 'Transferencia'}, tipo: 'Faturado'}
-        ];
-        // this.getDeliverys();
-        this.getTotalPrice();
-        this.getTotalDistance();
-        this.delivery2 = [];
-        this.explodeDeliveries();
-
-        this.pagamento = [
-            {name: 'Dinheiro', id: 1},
-            {name: 'Transferência', id: 2},
-            {name: 'Faturado', id: 3}
-        ];
-
-        this.statusEntrega = [
-            {name: 'Registrado', id: 1},
-            {name: 'Iniciado', id: 2},
-            {name: 'Concluido', id: 3}
-        ];
-        this.updateRowGroupMetaData();
+        this.listDelivery2 = [];
+        this.getDeliveries();
     }
 
       onClickAdd(): void {
@@ -68,7 +44,8 @@ export class ListDeliveryComponent implements OnInit {
       }
 
       onClickEdit(): Promise<boolean> {
-          return this.router.navigate(['update-delivery'], { relativeTo: this.route });
+          console.log('Dentro do onClickEdit()', JSON.stringify(this.selectedDelivery));
+          return this.router.navigate(['update-delivery', this.selectedDelivery], { relativeTo: this.route });
       }
 
       onClickDelete(): void {
@@ -80,29 +57,30 @@ export class ListDeliveryComponent implements OnInit {
       }
 
       getTotalPrice(): void {
-        this.valorTotal = 0;
-        if (this.delivery) {
-            this.delivery.forEach(c => this.valorTotal += parseFloat(c.preco));
+        this.totalDue = 0;
+        if (this.listDelivery) {
+            this.listDelivery.forEach(c => this.totalDue += c.route.totalDue);
         }
       }
 
       getTotalDistance(): void {
-          this.distanciaTotal = 0;
-          if (this.delivery) {
-            this.delivery.forEach(c => this.distanciaTotal += parseFloat(c.km));
+          this.totalDistance = 0;
+          if (this.listDelivery) {
+            this.listDelivery.forEach(c => this.totalDistance += c.route.totalDistance);
+            this.totalDistance = Number(this.totalDistance.toFixed(2));
         }
       }
 
       updateRowGroupMetaData() {
         this.rowGroupMetadata = {};
-        if (this.delivery2) {
-            for (let i = 0; i < this.delivery2.length; i++) {
-                const rowData = this.delivery2[i];
+        if (this.listDelivery2) {
+            for (let i = 0; i < this.listDelivery2.length; i++) {
+                const rowData = this.listDelivery2[i];
                 const id = rowData.id;
                 if (i == 0) {
                     this.rowGroupMetadata[id] = { index: 0, size: 1 };
                 } else {
-                    const previousRowData = this.delivery2[i - 1];
+                    const previousRowData = this.listDelivery2[i - 1];
                     const previousRowGroup = previousRowData.id;
                     if (id === previousRowGroup) {
                         this.rowGroupMetadata[id].size++;
@@ -114,40 +92,50 @@ export class ListDeliveryComponent implements OnInit {
         }
     }
 
-    // getDeliveries(): void {
-    //     this.service.getAllDeliveries()
-    //     .subscribe(deliverys => this.delivery = deliverys);
-    // }
+    getDeliveries(): void {
+        this.service.getAllDeliveries().pipe(
+            tap(data => console.log('Delivery list coming from server: ', JSON.stringify(data)))
+        )
+        .subscribe(data => {
+            this.listDelivery = data;
+            this.getTotalPrice();
+            this.getTotalDistance();
+            this.explodeDeliveries();
+            this.updateRowGroupMetaData();
+        });
+    }
 
     explodeDeliveries(): void {
-        this.delivery.forEach(cor => {
-            cor.itinerario.ponto.forEach(p => {
-                this.delivery2.push({
+        this.listDelivery.forEach(cor => {
+            cor.route.points.forEach(p => {
+                this.listDelivery2.push({
                     id: cor.id,
-                    status: cor.status,
-                    data: cor.data,
-                    horarios: cor.horarios,
-                    itinerario: {
-                        endereco: p.endereco,
-                        responsavel: p.responsavel,
-                        tempoEspera: p.tempoEspera,
+                    statusDelivery: cor.statusDelivery,
+                    createdAt: cor.createdAt,
+                    registeredTime: cor.registeredTime,
+                    collectUpTime: cor.collectUpTime,
+                    handoverTime: cor.handoverTime,
+                    route: {
+                        address: p.address.street,
+                        personResponsible: p.personResponsible,
+                        waitingTime: p.waitingTime,
                     },
-                    km: cor.km,
-                    cliente: cor.cliente,
-                    biker: cor.biker,
-                    preco: cor.preco,
-                    formaPagamento: cor.formaPagamento,
-                    tipo: cor.tipo,
+                    totalDistance: cor.route.totalDistance,
+                    customer: cor.customer.name,
+                    biker: cor.biker.fullName,
+                    totalDue: cor.route.totalDue,
+                    payment: cor.payment,
+                    customerType: cor.customer.customerType,
                 });
             });
         });
     }
 
     checkIfHaveMoneyEnvolved(): boolean {
-        return this.delivery.some(this.money);
+        return this.listDelivery.some(this.money);
     }
 
-    money(element): boolean {
-        return element.formaPagamento.nome === 'Dinheiro';
+    money(delivery: Delivery): boolean {
+        return delivery.payment.paymentType === 'MONEY';
     }
 }

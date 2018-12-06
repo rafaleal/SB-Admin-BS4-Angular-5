@@ -8,7 +8,7 @@
                 <button class="btn btn-danger" id="button-delete-delivery" (click)="onClickDelete()">Deletar Corrida</button>
             </div>
             <div class="content-section implementation">
-                <p-table [value]="delivery2" sortField="delivery2" sortMode="single" (onSort)="onSort()" selectionMode="single" [(selection)]="selectedDelivery">
+                <p-table [value]="listDelivery2" sortField="listDelivery2" sortMode="single" (onSort)="onSort()" selectionMode="single" [(selection)]="selectedDelivery">
                     <ng-template pTemplate="header">
                         <tr class="text-center">
                             <th rowspan="2">ID</th>
@@ -36,28 +36,28 @@
                     <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
                         <tr [pSelectableRow]="rowData.id" >
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.id }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.status }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.cliente }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.data }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaEntrada }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaColeta }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.horarios.horaEntrega }}</td>
-                            <td>{{ rowData.itinerario.endereco }}</td>
-                            <td>{{ rowData.itinerario.responsavel }}</td>
-                            <td>{{ rowData.itinerario.tempoEspera }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.km }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.preco | currency:'BRL' }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.formaPagamento.nome }}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex && checkIfHaveMoneyEnvolved()" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.formaPagamento.troco | currency:'BRL'}}</td>
-                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.tipo }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.statusDelivery }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.customer }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.createdAt | date: 'dd/MM/yyyy' }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.registeredTime }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.collectUpTime }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.handoverTime }}</td>
+                            <td>{{ rowData.route.address }}</td>
+                            <td>{{ rowData.route.personResponsible }}</td>
+                            <td>{{ rowData.route.waitingTime }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.totalDistance }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.totalDue | currency:'BRL' }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.payment.paymentType }}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex && checkIfHaveMoneyEnvolved()" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.payment.coinChange | currency:'BRL'}}</td>
+                            <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.customerType }}</td>
                             <td *ngIf="rowGroupMetadata[rowData.id].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.id].size">{{ rowData.biker }}</td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="footer">
                         <tr>
                             <td colspan="10">Total</td>
-                            <td>{{ distanciaTotal }}</td>
-                            <td>{{ valorTotal | currency:'BRL' }}</td>
+                            <td>{{ totalDistance }}</td>
+                            <td>{{ totalDue | currency:'BRL' }}</td>
                         </tr>
                     </ng-template>
                 </p-table>
