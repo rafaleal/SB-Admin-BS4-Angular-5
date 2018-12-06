@@ -9,6 +9,7 @@ export class LegalCustomer extends Customer {
     constructor() {
         super();
         this.address = new Address();
+        this.customerType = 'LEGAL';
     }
 
     public validateCNPJ() {

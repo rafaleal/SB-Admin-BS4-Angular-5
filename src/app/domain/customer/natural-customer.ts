@@ -8,5 +8,6 @@ export class NaturalCustomer extends Customer {
     constructor() {
         super();
         this.address = new Address();
+        this.customerType = 'NATURAL';
     }
 }
