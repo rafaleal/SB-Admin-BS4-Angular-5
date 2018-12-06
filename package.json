@@ -34,6 +34,7 @@
         "core-js": "^2.5.1",
         "font-awesome": "^4.7.0",
         "lodash": "^4.17.10",
+        "moment": "^2.22.2",
         "ng2-charts": "^1.6.0",
         "npm": "^6.4.1",
         "primeng": "^5.2.4",
