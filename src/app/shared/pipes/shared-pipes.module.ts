@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { EnumPipe } from './pipes';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { EnumPipe, LooseCurrencyPipe } from './pipes';
 
 @NgModule({
     imports: [
         CommonModule
     ],
-    declarations: [EnumPipe],
-    exports: [EnumPipe]
+    declarations: [EnumPipe, LooseCurrencyPipe],
+    exports: [EnumPipe, LooseCurrencyPipe],
+    providers: [CurrencyPipe]
 })
 export class SharedPipesModule { }

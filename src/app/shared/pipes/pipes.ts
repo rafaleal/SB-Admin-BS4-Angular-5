@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
 
 @Pipe({name: 'enum'})
 export class EnumPipe implements PipeTransform {
@@ -10,16 +11,24 @@ export class EnumPipe implements PipeTransform {
             dropObjects.push(new DropdownObject(index, item));
         });
 
-        console.log(JSON.stringify(dropObjects));
+        console.log('Pipe:', JSON.stringify(dropObjects));
         return dropObjects;
     }
 }
 
-@Pipe({name: 'cnpj'})
-export class CNPJPipe implements PipeTransform {
-    transform(value) {
-        return value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g,"\$1.\$2.\$3\/\$4\-\$5")
+const _NUMBER_FORMAT_REGEXP = /^(\d+)?\.((\d+)(-(\d+))?)?$/;
+
+@Pipe({name: 'looseCurrency'})
+export class LooseCurrencyPipe implements PipeTransform {
+  constructor(private _currencyPipe: CurrencyPipe) {}
+
+  transform(value: any, currencyCode: string, symbolDisplay: boolean, digits: string): string {
+    if (typeof value === 'number' || _NUMBER_FORMAT_REGEXP.test(value)) {
+      return this._currencyPipe.transform(value, currencyCode, symbolDisplay, digits);
+    } else {
+      return value;
     }
+  }
 }
 
 export class DropdownObject {
