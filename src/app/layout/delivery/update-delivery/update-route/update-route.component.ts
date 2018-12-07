@@ -47,7 +47,7 @@ export class UpdateRouteComponent implements OnInit, OnDestroy {
     searchControl: FormControl;
 
     readonly TAX_DISTANCE = 4;
-    readonly TAX_WAITING = 1;
+    readonly TAX_WAITING = 0.5;
 
     constructor(
         private mapsApiLoader: MapsAPILoader,
@@ -239,6 +239,14 @@ export class UpdateRouteComponent implements OnInit, OnDestroy {
 
     trackByIndex(index: number, obj: any): any {
         return index;
+    }
+
+    updateFinalAmount(): void {
+        console.log('Inside updateFinalAmount()');
+        const distancePrice = this.delivery.route.totalDue;
+        let extraAmount = 0;
+        this.delivery.route.points.forEach(point => extraAmount += point.waitingTime * this.TAX_WAITING);
+        this.delivery.finalAmount = distancePrice + extraAmount;
     }
 
 }

@@ -4,7 +4,7 @@ import { SumAmount } from './sum-amount';
 
 export class Point {
     id: number;
-    waitingTime: number;
+    waitingTime: number = 0;
     scheduledArrivalTime: string;
     address: Address;
     personResponsible: string;

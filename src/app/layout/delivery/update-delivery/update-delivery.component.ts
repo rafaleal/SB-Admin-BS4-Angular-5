@@ -37,7 +37,7 @@ export class UpdateDeliveryComponent implements OnInit, OnChanges, AfterViewInit
 
     loadDelivery(): void {
         this.route.data.subscribe(data => {
-            console.log(JSON.stringify(data));
+            console.log(JSON.stringify(data, null, 2));
             this.delivery = data.delivery;
         });
     }
@@ -69,15 +69,18 @@ export class UpdateDeliveryComponent implements OnInit, OnChanges, AfterViewInit
     }
 
     onClickSave(): void {
-        //
+        this.service.putDelivery(this.delivery).subscribe(() => this.router.navigate(['../'], {relativeTo: this.route}));
     }
 
     setCollectUpTime(): void {
+        console.log(JSON.stringify(this.delivery, null, 2));
         this.delivery.collectUpTime = moment().format('HH:mm:ss');
+        this.delivery.statusDelivery = 'ONGOING';
     }
 
     setHandOverTime(): void {
         this.delivery.handoverTime = moment().format('HH:mm:ss');
+        this.delivery.statusDelivery = 'COMPLETED';
     }
 
 }

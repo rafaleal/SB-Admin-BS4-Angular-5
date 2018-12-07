@@ -11,7 +11,7 @@ $bs-green: rgb(40, 167, 69);
     margin-top: 2em;
 }
 
-#button-save-delivery {
+#button-save-delivery, .total-amount {
     margin-left: 2em;
 }
 
@@ -26,4 +26,18 @@ $bs-green: rgb(40, 167, 69);
         background-color: $bs-green;
         color: white;
     }
+}
+
+.hour-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+}
+
+.status-container {
+    margin-top: 2em;
+}
+
+.set-time {
+    display: inline;
 }

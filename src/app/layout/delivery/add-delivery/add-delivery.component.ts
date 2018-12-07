@@ -40,10 +40,6 @@ export class AddDeliveryComponent implements OnInit {
         this.addDeliveryService.getAllBikers().subscribe(data => this.allBikers = data);
     }
 
-    loadCustomers () {
-    //
-    }
-
     initializeDelivery(): void {
         this.delivery = new Delivery();
     }
@@ -54,7 +50,7 @@ export class AddDeliveryComponent implements OnInit {
 
     onClickSave(): void {
         this.addDeliveryService.postDelivery(this.delivery)
-            .subscribe((bla: any) => this.router.navigate(['../'], {relativeTo: this.route}));
+            .subscribe(() => this.router.navigate(['../'], {relativeTo: this.route}));
     }
 
     isMoney(): boolean {
@@ -63,7 +59,7 @@ export class AddDeliveryComponent implements OnInit {
 
     setPaymentType(value: DropdownObject): void {
         console.log('Inide setPaymentType', value);
-        const amount = this.delivery.route.totalDue;
+        const amount = this.delivery.finalAmount;
         if (value.name === 'Money') {
             this.delivery.payment = new MoneyPayment(amount);
         } else {

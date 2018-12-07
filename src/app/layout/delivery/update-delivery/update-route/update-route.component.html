@@ -74,7 +74,7 @@
                             <input pInputText class="scheduledArrivalTime" placeholder="Insira a hora agendada..." [(ngModel)]="point.scheduledArrivalTime">
                         </td>
                         <td>
-                            <input pInputText class="waitingTime" placeholder="Insira o tempo de espera..." [(ngModel)]="point.waitingTime">
+                            <input pInputText type="number" class="waitingTime" placeholder="Insira o tempo de espera..." [(ngModel)]="point.waitingTime" (ngModelChange)="updateFinalAmount()">
                         </td>
                     </tr>
                 </tbody>

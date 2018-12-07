@@ -3,8 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DeliveryService } from '../delivery.service';
 import { routerTransition } from '../../../router.animations';
 import * as _ from 'lodash';
-import { Route } from '../../../domain/route';
-import { DeliveryStatusEnum } from '../../../domain/enums';
 import { Delivery } from '../../../domain/delivery';
 import { tap } from 'rxjs/operators';
 
@@ -35,13 +33,8 @@ export class ListDeliveryComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.listDelivery2 = [];
         this.getDeliveries();
     }
-
-      onClickAdd(): void {
-          //
-      }
 
       onClickEdit(): Promise<boolean> {
           console.log('Dentro do onClickEdit()', JSON.stringify(this.selectedDelivery));
@@ -49,7 +42,7 @@ export class ListDeliveryComponent implements OnInit {
       }
 
       onClickDelete(): void {
-          //
+        this.service.deleteDelivery(this.selectedDelivery).subscribe(() => this.getDeliveries());
       }
 
       onSort() {
@@ -59,7 +52,7 @@ export class ListDeliveryComponent implements OnInit {
       getTotalPrice(): void {
         this.totalDue = 0;
         if (this.listDelivery) {
-            this.listDelivery.forEach(c => this.totalDue += c.route.totalDue);
+            this.listDelivery.forEach(c => this.totalDue += c.finalAmount);
         }
       }
 
@@ -93,6 +86,7 @@ export class ListDeliveryComponent implements OnInit {
     }
 
     getDeliveries(): void {
+        this.listDelivery2 = [];
         this.service.getAllDeliveries().pipe(
             tap(data => console.log('Delivery list coming from server: ', JSON.stringify(data)))
         )
@@ -123,7 +117,7 @@ export class ListDeliveryComponent implements OnInit {
                     totalDistance: cor.route.totalDistance,
                     customer: cor.customer.name,
                     biker: cor.biker.fullName,
-                    totalDue: cor.route.totalDue,
+                    totalDue: cor.finalAmount,
                     payment: cor.payment,
                     customerType: cor.customer.customerType,
                 });

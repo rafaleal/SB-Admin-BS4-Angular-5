@@ -20,6 +20,7 @@ export class Delivery implements HorarioRegistravel {
     payment: Payment | MoneyPayment;
     customer: Customer;
     biker: Biker;
+    finalAmount: number;
 
     constructor() {
         this.statusDelivery = 'REGISTERED';
@@ -30,7 +31,7 @@ export class Delivery implements HorarioRegistravel {
 
     isReadyToBeAdded(): boolean {
         return _.isEmpty(this.customer)
-            || _.isEmpty(this.biker)
+            // || _.isEmpty(this.biker)
             || _.isEmpty(this.payment)
             || this.route.points.length < 2;
     }
