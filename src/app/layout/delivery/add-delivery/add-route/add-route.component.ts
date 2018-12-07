@@ -48,6 +48,7 @@ export class AddRouteComponent implements OnInit, OnDestroy {
     markers: any[] = [];
 
     readonly TAX = 4;
+    readonly TAX_WAITING = 0.5;
 
     idListener: google.maps.MapsEventListener;
 
@@ -174,7 +175,7 @@ export class AddRouteComponent implements OnInit, OnDestroy {
                 if (status === google.maps.DirectionsStatus.OK) {
                     this.directionsDisplay.setDirections(response);
                     this.calcDistance(response);
-                    this.calcDistancePrice();
+                    this.calcTotalAmount();
                 } else {
                     console.log('Failed to display directions');
                 }
@@ -193,12 +194,24 @@ export class AddRouteComponent implements OnInit, OnDestroy {
         this.delivery.route.totalDistance = this.distance;
     }
 
+    calcTotalAmount(): void {
+        this.calcDistancePrice();
+        this.calcWaitingTime();
+    }
+
     calcDistancePrice(): void {
         this.distancePrice = this.distance * 4;
         if (this.distancePrice < 12) {
             this.distancePrice = 12;
         }
         this.delivery.route.totalDue = this.distancePrice;
+        this.delivery.finalAmount = this.distancePrice;
+        console.log('Inside calcDistancePrice:', this.delivery.finalAmount);
+    }
+
+    calcWaitingTime(): void {
+        this.delivery.route.points.forEach(point => this.delivery.finalAmount += (point.waitingTime * this.TAX_WAITING));
+        console.log('Inside calcWaitingTime:', this.delivery.finalAmount);
     }
 
     trackByIndex(index: number, obj: any): any {
