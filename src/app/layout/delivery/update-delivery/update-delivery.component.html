@@ -22,7 +22,7 @@
                 </fieldset>
             </div>
             <div class="col col-xl-6 col-lg-12">
-                <fieldset class="col-md-6">
+                <fieldset class="col-md-6 status-container">
                     <div class="font-bold">
                         <p>Status Corrida</p>
                     </div>
@@ -32,7 +32,7 @@
                 </fieldset>
             </div>
             <div class="col col-xl-6 col-lg-12">
-                <fieldset class="col-md-6">
+                <fieldset class="col-md-6 status-container">
                     <div class="font-bold">
                         <p>Status Pagamento</p>
                     </div>
@@ -42,7 +42,7 @@
                 </fieldset>
             </div>
             <div class="col col-xl-4 col-lg-12">
-                <fieldset class="col-md-4">
+                <fieldset class="hour-container" style="margin-left: 1em">
                     <div class="font-bold">
                         <p id="hour-registered">Horário Registrado</p>
                     </div>
@@ -52,29 +52,32 @@
                 </fieldset>
             </div>
             <div class="col col-xl-4 col-lg-12">
-                <fieldset class="col-md-4">
+                <fieldset class="hour-container">
                     <div class="font-bold">
                         <p id="hour-collected">Horário Coletado</p>
                     </div>
                     <div>
                         <input pInputText id="input-hour-collected" [(ngModel)]="delivery.collectUpTime" />
-                        <button class="btn" (click)="setCollectUpTime()">Now</button>
+                        <button class="btn set-time" (click)="setCollectUpTime()">Now</button>
                     </div>
                 </fieldset>
             </div>
             <div class="col col-xl-4 col-lg-12">
-                <fieldset class="col-md-4">
+                <fieldset class="hour-container">
                     <div class="font-bold">
                         <p id="hour-handovered">Horário Entregue</p>
                     </div>
                     <div>
                         <input pInputText id="input-hour-handovered" [(ngModel)]="delivery.handoverTime" />
-                        <button class="btn" (click)="setHandOverTime()">Now</button>
+                        <button class="btn set-time" (click)="setHandOverTime()">Now</button>
                     </div>
                 </fieldset>
             </div>
             <div class="col col-lg-12">
                 <app-update-route [(delivery)]="delivery"></app-update-route>
+            </div>
+            <div class="total-amount">
+                <p class="font-bold">Valor Total da Corrida: <span>{{ delivery.finalAmount }}</span></p>
             </div>
             <div class="col col-lg-12 buttons-container">
                 <button class="btn" id="button-cancel-delivery" [routerLink]="['']">Cancelar</button>
