@@ -47,7 +47,7 @@ export class DeliveryService {
     }
 
     putDelivery(delivery: Delivery) {
-        return this.http.put<Delivery>(this.deliveryDefaultURL.replace(this.regex, delivery.id.toString()), httpOptions);
+        return this.http.put<Delivery>(this.deliveryDefaultURL.replace(this.regex, delivery.id.toString()), delivery, httpOptions);
     }
 
     deleteDelivery(id: number) {
